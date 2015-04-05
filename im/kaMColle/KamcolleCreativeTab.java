@@ -1,7 +1,7 @@
 package im.kaMColle;
 
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 
 public class KamcolleCreativeTab extends CreativeTabs{
 
@@ -15,7 +15,7 @@ public class KamcolleCreativeTab extends CreativeTabs{
 	
 	@Override
 	public int getTabIconItemIndex() {
-		return Block.pumpkin.blockID;
+		return Item.boat.itemID;
 	}
 
 
