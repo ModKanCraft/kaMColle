@@ -2,10 +2,13 @@ package im.kaMColle;
 
 import im.kaMColle.proxy.KamcolleClientProxy;
 import im.kaMColle.proxy.KamcolleCommonProxy;
+import im.kaMColle.render.RenderPlayerKansou;
 
 import java.io.File;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
@@ -29,8 +32,7 @@ public class Kamcolle {
             clientSide = "im.kaMColle.proxy.KamcolleClientProxy",
             serverSide = "im.kaMColle.proxy.KamcolleCommonProxy"
     )
-    public static KamcolleCommonProxy commonProxy;
-	public static KamcolleClientProxy clientProxy;
+    public static KamcolleCommonProxy proxy;
 	
 	@EventHandler
 	public void preLoad(FMLPreInitializationEvent event)
@@ -40,8 +42,7 @@ public class Kamcolle {
 	     //KamcolleClientProps.init();
 	     //KamcolleItems.init();
 	     //KamcolleBlocks.init();
-	     commonProxy.preInit();
-	     clientProxy.preInit();
+	     proxy.preInit();
 	     //CORE_CONFIG.SaveConfig();
 	}
 	 
@@ -49,18 +50,16 @@ public class Kamcolle {
 	public void load(FMLInitializationEvent event)
 	{	
 	     //EntityRegistry.addSpawn(EntityWoodKarakuriNingyG.class, 10, 4, 4, EnumCreatureType.monster);
-		 commonProxy.init();
-		 clientProxy.init();
-		 clientProxy.registerRenderThings();//calls the methods in our proxy, which will do things on client side
-	     clientProxy.registerSound();
+		 proxy.init();
+		 //clientProxy.registerRenderThings();//calls the methods in our proxy, which will do things on client side
+	     //clientProxy.registerSound();
 	     //GameRegistry.addRecipe(new ItemStack(sth, 1), new Object[]{"XYX",Character.valueOf('X'),s,Character.valueOf('Y'),th});
 	}
 	 
 	@EventHandler
 	public void postLoad(FMLPostInitializationEvent event)
 	{
-		 commonProxy.postInit();
-		 clientProxy.postInit();
+		 proxy.postInit();
 	}
 
 }

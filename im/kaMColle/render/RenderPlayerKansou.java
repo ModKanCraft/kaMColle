@@ -23,9 +23,8 @@ public class RenderPlayerKansou {
 	 *otherPlayer.posZ - RenderManager.renderPosZ);
 	 */
 	@ForgeSubscribe
-	//订阅Post事件
 	public void renderPlayerKansouTest1(RenderPlayerEvent.Post event){
-		if(event.entityPlayer.getHeldItem().itemID!=Item.boat.itemID){
+		if(event.entityPlayer.getHeldItem()==null||event.entityPlayer.getHeldItem().itemID!=Item.boat.itemID){
 			return;
 		}
 		double pos[]={event.entityPlayer.posX,event.entityPlayer.posY,event.entityPlayer.posZ};
@@ -42,9 +41,8 @@ public class RenderPlayerKansou {
 		model.render((Entity)null,0F,0F,3F, 0F, 0F, 1F);
 	}
 	@ForgeSubscribe
-	//订阅Specials.Post事件
 	public void renderPlayerKansouTest2(RenderPlayerEvent.Specials.Post event){
-		if(event.entityPlayer.getHeldItem().itemID!=Item.bed.itemID){
+		if(event.entityPlayer.getHeldItem()==null||event.entityPlayer.getHeldItem().itemID!=Item.bed.itemID){
 			return;
 		}
 		model.render((Entity)null,0F,0F,3F, 0F, 0F, 1F);
