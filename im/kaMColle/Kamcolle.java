@@ -26,8 +26,8 @@ public class Kamcolle {
 	public static Kamcolle instance;
 	
 	@SidedProxy(
-            clientSide = "im.kaMColle.proxy.kamcolleClientProxy",
-            serverSide = "im.kaMColle.proxy.kamcolleCommonProxy"
+            clientSide = "im.kaMColle.proxy.KamcolleClientProxy",
+            serverSide = "im.kaMColle.proxy.KamcolleCommonProxy"
     )
     public static KamcolleCommonProxy commonProxy;
 	public static KamcolleClientProxy clientProxy;
