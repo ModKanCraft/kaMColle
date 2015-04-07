@@ -22,6 +22,7 @@ public class RenderPlayerKansou {
 	 *otherPlayer.posY - RenderManager.renderPosY, 
 	 *otherPlayer.posZ - RenderManager.renderPosZ);
 	 */
+	 /*
 	@ForgeSubscribe
 	public void renderPlayerKansouTest1(RenderPlayerEvent.Post event){
 		if(event.entityPlayer.getHeldItem()==null||event.entityPlayer.getHeldItem().itemID!=Item.boat.itemID){
@@ -39,7 +40,7 @@ public class RenderPlayerKansou {
 		GL11.glRotatef(-viewY, 1F, 0F, 0F);
 		GL11.glRotatef(angle, 0F, 0F, 1F);
 		model.render((Entity)null,0F,0F,3F, 0F, 0F, 1F);
-	}
+	}*/
 	@ForgeSubscribe
 	public void renderPlayerKansouTest2(RenderPlayerEvent.Specials.Post event){
 		if(event.entityPlayer.getHeldItem()==null||event.entityPlayer.getHeldItem().itemID!=Item.bed.itemID){
