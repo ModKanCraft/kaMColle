@@ -1,19 +1,15 @@
 package im.kaMColle.render;
 
-import org.lwjgl.opengl.GL11;
-
-import net.minecraftforge.event.ForgeSubscribe;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.model.ModelBat;
+import net.minecraft.client.model.ModelBoat;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
-import net.minecraft.util.Vec3;
+import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.client.event.RenderPlayerEvent.Specials;
+import net.minecraftforge.event.ForgeSubscribe;
 
 public class RenderPlayerKansou {
-	ModelBat model=new ModelBat();
+	ModelBoat model=new ModelBoat();
 	RenderManager renderManager=RenderManager.instance;
 	/*[C]LI-狼:
 	 *所以如果你要渲染世界里其他玩家的效果，还得自己处理下变换，不过也不难
@@ -23,6 +19,10 @@ public class RenderPlayerKansou {
 	 *otherPlayer.posZ - RenderManager.renderPosZ);
 	 */
 	 /*
+	  * 好吧其实我没能自己实现这玩意
+	  * 但是Test2就不用我自己实现啊，果断以后用Test2
+	  * 记得把这个改回去
+	  * ModelBat->entitybat.getIsBatHanging()
 	@ForgeSubscribe
 	public void renderPlayerKansouTest1(RenderPlayerEvent.Post event){
 		if(event.entityPlayer.getHeldItem()==null||event.entityPlayer.getHeldItem().itemID!=Item.boat.itemID){
@@ -43,9 +43,10 @@ public class RenderPlayerKansou {
 	}*/
 	@ForgeSubscribe
 	public void renderPlayerKansouTest2(RenderPlayerEvent.Specials.Post event){
-		if(event.entityPlayer.getHeldItem()==null||event.entityPlayer.getHeldItem().itemID!=Item.bed.itemID){
+		if(event.entityPlayer.inventory.hasItem(Item.boat.itemID)){
 			return;
 		}
-		model.render((Entity)null,0F,0F,3F, 0F, 0F, 1F);
+		renderManager.renderEngine.bindTexture(new ResourceLocation("textures/entity/boat.png"));
+		model.render((Entity)null,0F,-1F,3F, 0F, 0F, 0.0625F);
 	}
 }
