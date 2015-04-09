@@ -1,16 +1,25 @@
 package im.kaMColle.render;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
+
 import net.minecraft.client.model.ModelBoat;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.ForgeSubscribe;
 
 public class RenderPlayerKansou {
 	ModelBoat model=new ModelBoat();
 	RenderManager renderManager=RenderManager.instance;
+	BufferedInputStream bi=new BufferedInputStream(this.getClass().getResourceAsStream("/Objmodels/Test.obj"));
+	BufferedReader br=new BufferedReader(new InputStreamReader(bi));
 	/*[C]LI-狼:
 	 *所以如果你要渲染世界里其他玩家的效果，还得自己处理下变换，不过也不难
 	 *GL11.glTranslated(
@@ -48,5 +57,12 @@ public class RenderPlayerKansou {
 		}
 		renderManager.renderEngine.bindTexture(new ResourceLocation("textures/entity/boat.png"));
 		model.render((Entity)null,0F,-1F,3F, 0F, 0F, 0.0625F);
+		try {
+			System.out.println(br.readLine());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			MinecraftForge.EVENT_BUS.unregister(this);
+		}
 	}
 }

@@ -4,6 +4,7 @@ import java.util.logging.Level;
 
 import im.kaMColle.Kamcolle;
 import im.kaMColle.render.RenderPlayerKansou;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.common.MinecraftForge;
 
 public class KamcolleClientProxy extends KamcolleCommonProxy{
@@ -32,6 +33,9 @@ public class KamcolleClientProxy extends KamcolleCommonProxy{
 
 	public void registerSound() {
 		// TODO Auto-generated method stub
+		
+	}
+	void test(){
 		
 	}
 }
