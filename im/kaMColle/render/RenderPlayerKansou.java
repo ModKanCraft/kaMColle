@@ -18,8 +18,6 @@ import net.minecraftforge.event.ForgeSubscribe;
 public class RenderPlayerKansou {
 	ModelBoat model=new ModelBoat();
 	RenderManager renderManager=RenderManager.instance;
-	BufferedInputStream bi=new BufferedInputStream(this.getClass().getResourceAsStream("/Objmodels/Test.obj"));
-	BufferedReader br=new BufferedReader(new InputStreamReader(bi));
 	/*[C]LI-狼:
 	 *所以如果你要渲染世界里其他玩家的效果，还得自己处理下变换，不过也不难
 	 *GL11.glTranslated(
@@ -55,10 +53,16 @@ public class RenderPlayerKansou {
 		if(event.entityPlayer.inventory.hasItem(Item.boat.itemID)){
 			return;
 		}
+		BufferedReader br1;
+		BufferedReader br2;
 		renderManager.renderEngine.bindTexture(new ResourceLocation("textures/entity/boat.png"));
 		model.render((Entity)null,0F,-1F,3F, 0F, 0F, 0.0625F);
 		try {
-			System.out.println(br.readLine());
+			br1=new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("/im/kaMColle/OBJmodels/Test.obj")));
+			br2=new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("../OBJmodels/Test.obj")));
+			
+			System.out.println("br1:"+br1.readLine());
+			System.out.println("br2:"+br2.readLine());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

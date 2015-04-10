@@ -38,7 +38,7 @@ public class Kamcolle {
 	public void preLoad(FMLPreInitializationEvent event)
 	{
 		 log.setParent(FMLLog.getLogger());
-	     log.info("Starting Gimmickery " + Kamcolle.VERSION);
+	     log.info("Starting kaMColle " + Kamcolle.VERSION);
 	     //KamcolleClientProps.init();
 	     //KamcolleItems.init();
 	     //KamcolleBlocks.init();
