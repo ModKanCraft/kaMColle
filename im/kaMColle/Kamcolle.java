@@ -1,26 +1,19 @@
 package im.kaMColle;
 
-import im.kaMColle.proxy.KamcolleClientProxy;
 import im.kaMColle.proxy.KamcolleCommonProxy;
-import im.kaMColle.render.RenderPlayerKansou;
 
-import java.io.File;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 
 @Mod(modid="kamcolle", name="kaMColle", version=Kamcolle.VERSION)
-@NetworkMod(clientSideRequired=true, serverSideRequired=true)
 public class Kamcolle {
 	public static final String VERSION = "0.0.1";
 	public static Logger log = Logger.getLogger("kamcolle");
@@ -37,7 +30,7 @@ public class Kamcolle {
 	@EventHandler
 	public void preLoad(FMLPreInitializationEvent event)
 	{
-		 log.setParent(FMLLog.getLogger());
+		 log.setParent((Logger) FMLLog.getLogger());
 	     log.info("Starting kaMColle " + Kamcolle.VERSION);
 	     //KamcolleClientProps.init();
 	     //KamcolleItems.init();

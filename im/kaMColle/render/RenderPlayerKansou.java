@@ -1,19 +1,18 @@
 package im.kaMColle.render;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.Reader;
 
 import net.minecraft.client.model.ModelBoat;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeSubscribe;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class RenderPlayerKansou {
 	ModelBoat model=new ModelBoat();
@@ -48,9 +47,9 @@ public class RenderPlayerKansou {
 		GL11.glRotatef(angle, 0F, 0F, 1F);
 		model.render((Entity)null,0F,0F,3F, 0F, 0F, 1F);
 	}*/
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void renderPlayerKansouTest2(RenderPlayerEvent.Specials.Post event){
-		if(event.entityPlayer.inventory.hasItem(Item.boat.itemID)){
+		if(event.entityPlayer.inventory.hasItem(Items.boat)){
 			return;
 		}
 		BufferedReader br1;
