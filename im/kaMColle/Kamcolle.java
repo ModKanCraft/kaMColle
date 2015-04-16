@@ -1,8 +1,11 @@
 package im.kaMColle;
 
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+
 import im.kaMColle.proxy.KamcolleCommonProxy;
 
-import java.util.logging.Logger;
 
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
@@ -16,7 +19,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid="kamcolle", name="kaMColle", version=Kamcolle.VERSION)
 public class Kamcolle {
 	public static final String VERSION = "0.0.1";
-	public static Logger log = Logger.getLogger("kamcolle");
+	public static Logger log = LogManager.getLogger("kamcolle");
 	
 	@Instance("kamcolle")
 	public static Kamcolle instance;
@@ -30,7 +33,6 @@ public class Kamcolle {
 	@EventHandler
 	public void preLoad(FMLPreInitializationEvent event)
 	{
-		 log.setParent((Logger) FMLLog.getLogger());
 	     log.info("Starting kaMColle " + Kamcolle.VERSION);
 	     //KamcolleClientProps.init();
 	     //KamcolleItems.init();
