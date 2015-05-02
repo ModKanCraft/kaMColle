@@ -16,9 +16,9 @@ public class KamcolleClientProxy extends KamcolleCommonProxy{
 
 	public void init() {
 		// TODO Auto-generated method stub
-		Kamcolle.log.info("Try Event Regist");
+		Kamcolle.LOGGER.info("Try Event Regist");
 	    MinecraftForge.EVENT_BUS.register(new RenderPlayerKansou());
-	    Kamcolle.log.info("Event Regist Finished");
+	    Kamcolle.LOGGER.info("Event Regist Finished");
 	}
 
 	public void postInit() {

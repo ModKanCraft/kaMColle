@@ -19,7 +19,8 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 @Mod(modid="kamcolle", name="kaMColle", version=Kamcolle.VERSION)
 public class Kamcolle {
 	public static final String VERSION = "0.0.1";
-	public static Logger log = LogManager.getLogger("kamcolle");
+	public static String ID="kamcolle";
+	public static Logger LOGGER = LogManager.getLogger(ID);
 	
 	@Instance("kamcolle")
 	public static Kamcolle instance;
@@ -33,7 +34,7 @@ public class Kamcolle {
 	@EventHandler
 	public void preLoad(FMLPreInitializationEvent event)
 	{
-	     log.info("Starting kaMColle " + Kamcolle.VERSION);
+	     LOGGER.info("Starting kaMColle " + Kamcolle.VERSION);
 	     //KamcolleClientProps.init();
 	     //KamcolleItems.init();
 	     //KamcolleBlocks.init();
