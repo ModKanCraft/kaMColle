@@ -1,5 +1,6 @@
 package im.kaMColle.render;
 
+import im.kaMColle.FleetClass;
 import im.kaMColle.OBJmodels.KamcolleOBJModelResourceManager;
 
 import java.io.BufferedReader;
@@ -18,7 +19,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class RenderPlayerKansou {
 	ModelBoat model=new ModelBoat();
-	RenderManager renderManager=RenderManager.instance;
 	KamcolleOBJModelResourceManager modelManager=KamcolleOBJModelResourceManager.getManager();
 	/*[C]LI-狼:
 	 *所以如果你要渲染世界里其他玩家的效果，还得自己处理下变换，不过也不难
@@ -36,6 +36,6 @@ public class RenderPlayerKansou {
 		if(event.entityPlayer.inventory.hasItem(Items.boat)){
 			return;
 		}
-		modelManager.RederModel("TEST");
+		modelManager.RederModel(FleetClass.TEST);
 	}
 }
