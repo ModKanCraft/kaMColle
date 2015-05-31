@@ -4,6 +4,7 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 
+import im.kaMColle.bolck.FleetSallyBoard;
 import im.kaMColle.proxy.KamcolleCommonProxy;
 
 
@@ -22,14 +23,17 @@ public class Kamcolle {
 	public static String ID="kamcolle";
 	public static Logger LOGGER = LogManager.getLogger(ID);
 	
-	@Instance("kamcolle")
-	public static Kamcolle instance;
-	
 	@SidedProxy(
             clientSide = "im.kaMColle.proxy.KamcolleClientProxy",
             serverSide = "im.kaMColle.proxy.KamcolleCommonProxy"
     )
     public static KamcolleCommonProxy proxy;
+	
+	@Instance("kamcolle")
+	public static Kamcolle instance;
+	public static KamcolleCreativeTab tab=new KamcolleCreativeTab("kanceaft");
+	public static FleetSallyBoard blockSallyBoard=new FleetSallyBoard();
+	
 	
 	@EventHandler
 	public void preLoad(FMLPreInitializationEvent event)

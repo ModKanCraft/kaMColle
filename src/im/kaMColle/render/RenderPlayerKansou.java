@@ -2,21 +2,12 @@ package im.kaMColle.render;
 
 import im.kaMColle.FleetClass;
 import im.kaMColle.OBJmodels.KamcolleOBJModelResourceManager;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import net.minecraft.client.model.ModelBoat;
+import net.minecraft.init.Items;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 
 import org.lwjgl.opengl.GL11;
 
-import net.minecraft.client.model.ModelBoat;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.Entity;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.common.MinecraftForge;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class RenderPlayerKansou {
@@ -36,21 +27,14 @@ public class RenderPlayerKansou {
 	  */
 	@SubscribeEvent
 	public void renderPlayerKansouTest(RenderPlayerEvent.Specials.Post event){
-		//测试1
-		if(event.entityPlayer.inventory.hasItem(Items.boat)){
-			GL11.glPushMatrix();
-			GL11.glScalef(1/16, 1/16, 1/16);
-			modelManager.RederModel(FleetClass.TEST);
-			GL11.glPopMatrix();
-		}
-		//测试2
-		if(event.entityPlayer.inventory.hasItem(Items.bed)){
+		//测试3
+		if(true/*event.entityPlayer.getEntityData().getString("FleetClass").equals("TEST")*/){
 			GL11.glPushMatrix();
 			GL11.glScalef(1/16F, 1/16F, 1/16F);
 			GL11.glTranslatef(
 					0, 
 					event.renderer.modelBipedMain.bipedLeftLeg.rotationPointY, 
-					event.renderer.modelBipedMain.bipedLeftLeg.rotationPointZ
+					event.renderer.modelBipedMain.bipedLeftLeg.rotationPointZ+8
 					);
 			GL11.glRotatef(event.renderer.modelBipedMain.bipedLeftLeg.rotateAngleX*(180F/(float)Math.PI), 1, 0, 0);
 			GL11.glTranslatef(
@@ -58,8 +42,9 @@ public class RenderPlayerKansou {
 					event.renderer.modelBipedMain.bipedLeftLeg.offsetY, 
 					event.renderer.modelBipedMain.bipedLeftLeg.offsetZ
 					);
-			//GL11.glScalef(1/10F, 1/10F, 1/10F);
-			modelManager.RederModel(FleetClass.TEST);
+			GL11.glScalef(1/2F, 1/2F, 1/2F);
+			GL11.glRotatef(180, 1, 0, 0);
+			modelManager.renderKansouModel(FleetClass.TEST);
 			GL11.glPopMatrix();
 		}
 	}
