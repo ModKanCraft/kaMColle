@@ -5,7 +5,7 @@ import im.kaMColle.Kamcolle;
 import im.kaMColle.item.ItemSallyBoard;
 
 public class KamcolleBlocks {
-	public static void initBlock(){
+	public static void init(){
 		GameRegistry.registerBlock(Kamcolle.blockSallyBoard,ItemSallyBoard.class, "sallyboard");
 	}
 }

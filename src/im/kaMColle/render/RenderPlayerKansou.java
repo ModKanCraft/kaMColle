@@ -28,7 +28,7 @@ public class RenderPlayerKansou {
 	@SubscribeEvent
 	public void renderPlayerKansouTest(RenderPlayerEvent.Specials.Post event){
 		//测试3
-		if(true/*event.entityPlayer.getEntityData().getString("FleetClass").equals("TEST")*/){
+		if(event.entityPlayer.getEntityData().getString("FleetClass").equals("TEST")){
 			GL11.glPushMatrix();
 			GL11.glScalef(1/16F, 1/16F, 1/16F);
 			GL11.glTranslatef(
