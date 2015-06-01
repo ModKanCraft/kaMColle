@@ -1,6 +1,6 @@
 package im.kaMColle;
 
-import im.kaMColle.bolck.FleetSallyBoard;
+import im.kaMColle.block.FleetSallyBoard;
 import im.kaMColle.init.KamcolleBlocks;
 import im.kaMColle.proxy.KamcolleCommonProxy;
 
