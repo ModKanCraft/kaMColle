@@ -33,5 +33,10 @@ public class FleetSallyBoard extends BlockContainer {
 			}
 		}
 	}
+	
+	@Override
+	public boolean isOpaqueCube(){
+		return true;
+	}
 
 }

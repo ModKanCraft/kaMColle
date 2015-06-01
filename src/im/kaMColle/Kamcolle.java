@@ -1,14 +1,12 @@
 package im.kaMColle;
 
-import org.apache.logging.log4j.Logger;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-
 import im.kaMColle.bolck.FleetSallyBoard;
+import im.kaMColle.init.KamcolleBlocks;
 import im.kaMColle.proxy.KamcolleCommonProxy;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -41,7 +39,7 @@ public class Kamcolle {
 	     LOGGER.info("Starting kaMColle " + Kamcolle.VERSION);
 	     //KamcolleClientProps.init();
 	     //KamcolleItems.init();
-	     //KamcolleBlocks.init();
+	     KamcolleBlocks.init();
 	     proxy.preInit();
 	     //CORE_CONFIG.SaveConfig();
 	}
