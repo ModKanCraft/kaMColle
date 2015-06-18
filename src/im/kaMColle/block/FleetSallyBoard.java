@@ -38,5 +38,9 @@ public class FleetSallyBoard extends BlockContainer {
 	public boolean isOpaqueCube(){
 		return true;
 	}
+	@Override
+	public int getRenderType(){
+		return 3939;
+	}
 
 }

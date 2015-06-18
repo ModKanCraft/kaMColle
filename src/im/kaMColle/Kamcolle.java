@@ -3,6 +3,7 @@ package im.kaMColle;
 import im.kaMColle.block.FleetSallyBoard;
 import im.kaMColle.init.KamcolleBlocks;
 import im.kaMColle.proxy.KamcolleCommonProxy;
+import im.kaMColle.tileEntity.SallyBoardTileEntity;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +15,7 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid="kamcolle", name="kaMColle", version=Kamcolle.VERSION)
 public class Kamcolle {
@@ -41,6 +43,7 @@ public class Kamcolle {
 	     //KamcolleItems.init();
 	     KamcolleBlocks.init();
 	     proxy.preInit();
+	     GameRegistry.registerTileEntity(SallyBoardTileEntity.class, "TileEntitySallyBoard");
 	     //CORE_CONFIG.SaveConfig();
 	}
 	 
