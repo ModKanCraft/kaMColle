@@ -7,14 +7,18 @@ import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class FleetSallyBoard extends BlockContainer {
 
 	public FleetSallyBoard() {
 		super(Material.rock);
+		this.setBlockName("FleetSallyBoard");
 		this.setCreativeTab(Kamcolle.tab);
 		this.setBlockBounds(0F, 0F, 0F, 1F, 0.9F, 1F);
+		this.setLightOpacity(0);
 	}
 
 	@Override
@@ -36,11 +40,16 @@ public class FleetSallyBoard extends BlockContainer {
 	
 	@Override
 	public boolean isOpaqueCube(){
-		return true;
+		return false;
 	}
 	@Override
 	public int getRenderType(){
 		return 3939;
 	}
-
+	public boolean renderAsNormalBlock(){
+        return false;
+    }
+	public boolean isFlammable(IBlockAccess world, int x, int y, int z, int metadata, ForgeDirection face){
+        return false;
+    }
 }

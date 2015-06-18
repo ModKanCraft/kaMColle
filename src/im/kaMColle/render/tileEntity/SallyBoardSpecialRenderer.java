@@ -17,5 +17,4 @@ public class SallyBoardSpecialRenderer extends TileEntitySpecialRenderer {
 		KamcolleOBJModelResourceManager.getManager().renderModelSallyBoard();
 		GL11.glPopMatrix();
 	}
-
 }

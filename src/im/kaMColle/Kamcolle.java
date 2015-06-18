@@ -2,6 +2,9 @@ package im.kaMColle;
 
 import im.kaMColle.block.FleetSallyBoard;
 import im.kaMColle.init.KamcolleBlocks;
+import im.kaMColle.init.KamcolleItems;
+import im.kaMColle.item.ItemSallyBoard;
+import im.kaMColle.proxy.KamcolleClientProxy;
 import im.kaMColle.proxy.KamcolleCommonProxy;
 import im.kaMColle.tileEntity.SallyBoardTileEntity;
 
@@ -32,7 +35,9 @@ public class Kamcolle {
 	@Instance("kamcolle")
 	public static Kamcolle instance;
 	public static KamcolleCreativeTab tab=new KamcolleCreativeTab("kanceaft");
+	
 	public static FleetSallyBoard blockSallyBoard=new FleetSallyBoard();
+	
 	
 	
 	@EventHandler
@@ -40,7 +45,7 @@ public class Kamcolle {
 	{
 	     LOGGER.info("Starting kaMColle " + Kamcolle.VERSION);
 	     //KamcolleClientProps.init();
-	     //KamcolleItems.init();
+	     KamcolleItems.init();
 	     KamcolleBlocks.init();
 	     proxy.preInit();
 	     GameRegistry.registerTileEntity(SallyBoardTileEntity.class, "TileEntitySallyBoard");
@@ -52,8 +57,10 @@ public class Kamcolle {
 	{	
 	     //EntityRegistry.addSpawn(EntityWoodKarakuriNingyG.class, 10, 4, 4, EnumCreatureType.monster);
 		 proxy.init();
-		 //clientProxy.registerRenderThings();//calls the methods in our proxy, which will do things on client side
-	     //clientProxy.registerSound();
+		 if(proxy instanceof KamcolleClientProxy){
+			 ((KamcolleClientProxy) proxy).registerRenderThings();//calls the methods in our proxy, which will do things on client side
+		     ((KamcolleClientProxy) proxy).registerSound();//
+		 }
 	     //GameRegistry.addRecipe(new ItemStack(sth, 1), new Object[]{"XYX",Character.valueOf('X'),s,Character.valueOf('Y'),th});
 	}
 	 
