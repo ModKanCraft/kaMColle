@@ -1,13 +1,17 @@
 package im.kaMColle;
 
 import im.kaMColle.block.FleetSallyBoard;
+import im.kaMColle.config.KamcolleConfig;
 import im.kaMColle.init.KamcolleBlocks;
 import im.kaMColle.init.KamcolleItems;
-import im.kaMColle.item.ItemSallyBoard;
+import im.kaMColle.proxy.KamcolleClientProps;
 import im.kaMColle.proxy.KamcolleClientProxy;
 import im.kaMColle.proxy.KamcolleCommonProxy;
 import im.kaMColle.tileEntity.SallyBoardTileEntity;
 
+import java.io.File;
+
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,9 +26,10 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid="kamcolle", name="kaMColle", version=Kamcolle.VERSION)
 public class Kamcolle {
-	public static final String VERSION = "0.0.1";
+	public static final String VERSION = "0.0.2";
 	public static String ID="kamcolle";
-	public static Logger LOGGER = LogManager.getLogger(ID);
+	public static Logger LOGGER = LogManager.getLogger(ID);	
+	public static KamcolleConfig coreConfig;
 	
 	@SidedProxy(
             clientSide = "im.kaMColle.proxy.KamcolleClientProxy",
@@ -39,17 +44,22 @@ public class Kamcolle {
 	public static FleetSallyBoard blockSallyBoard=new FleetSallyBoard();
 	
 	
+
+	
+	
 	
 	@EventHandler
 	public void preLoad(FMLPreInitializationEvent event)
 	{
-	     LOGGER.info("Starting kaMColle " + Kamcolle.VERSION);
-	     //KamcolleClientProps.init();
-	     KamcolleItems.init();
-	     KamcolleBlocks.init();
-	     proxy.preInit();
-	     GameRegistry.registerTileEntity(SallyBoardTileEntity.class, "TileEntitySallyBoard");
-	     //CORE_CONFIG.SaveConfig();
+		
+	    LOGGER.info("Starting kaMColle " + Kamcolle.VERSION);
+	    coreConfig=new KamcolleConfig(new File("config/Kamcolle.config"));
+	    KamcolleClientProps.init();
+	    KamcolleItems.init();
+	    KamcolleBlocks.init();
+	    proxy.preInit();
+	    GameRegistry.registerTileEntity(SallyBoardTileEntity.class, "TileEntitySallyBoard");
+	    coreConfig.save();
 	}
 	 
 	@EventHandler
