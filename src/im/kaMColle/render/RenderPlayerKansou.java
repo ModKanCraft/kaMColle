@@ -36,7 +36,7 @@ public class RenderPlayerKansou {
 					event.renderer.modelBipedMain.bipedLeftLeg.rotationPointY, 
 					event.renderer.modelBipedMain.bipedLeftLeg.rotationPointZ+8
 					);
-			GL11.glRotatef(event.renderer.modelBipedMain.bipedLeftLeg.rotateAngleX*(180F/(float)Math.PI), 1, 0, 0);
+			//GL11.glRotatef(event.renderer.modelBipedMain.bipedLeftLeg.rotateAngleX*(180F/(float)Math.PI), 1, 0, 0);
 			GL11.glTranslatef(
 					0, 
 					event.renderer.modelBipedMain.bipedLeftLeg.offsetY, 

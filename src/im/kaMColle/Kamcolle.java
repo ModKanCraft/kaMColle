@@ -2,14 +2,19 @@ package im.kaMColle;
 
 import im.kaMColle.block.FleetSallyBoard;
 import im.kaMColle.config.KamcolleConfig;
+import im.kaMColle.handleevent.PlayerWithKandouInWaterHandler;
 import im.kaMColle.init.KamcolleBlocks;
 import im.kaMColle.init.KamcolleItems;
 import im.kaMColle.proxy.KamcolleClientProps;
 import im.kaMColle.proxy.KamcolleClientProxy;
 import im.kaMColle.proxy.KamcolleCommonProxy;
+import im.kaMColle.render.RenderPlayerKansou;
 import im.kaMColle.tileEntity.SallyBoardTileEntity;
 
 import java.io.File;
+
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.common.MinecraftForge;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -65,19 +70,16 @@ public class Kamcolle {
 	@EventHandler
 	public void load(FMLInitializationEvent event)
 	{	
-	     //EntityRegistry.addSpawn(EntityWoodKarakuriNingyG.class, 10, 4, 4, EnumCreatureType.monster);
-		 proxy.init();
-		 if(proxy instanceof KamcolleClientProxy){
-			 ((KamcolleClientProxy) proxy).registerRenderThings();//calls the methods in our proxy, which will do things on client side
-		     ((KamcolleClientProxy) proxy).registerSound();//
-		 }
-	     //GameRegistry.addRecipe(new ItemStack(sth, 1), new Object[]{"XYX",Character.valueOf('X'),s,Character.valueOf('Y'),th});
+	    //EntityRegistry.addSpawn(EntityWoodKarakuriNingyG.class, 10, 4, 4, EnumCreatureType.monster);
+		proxy.init();
+		MinecraftForge.EVENT_BUS.register(new PlayerWithKandouInWaterHandler());
+	    //GameRegistry.addRecipe(new ItemStack(sth, 1), new Object[]{"XYX",Character.valueOf('X'),s,Character.valueOf('Y'),th});
 	}
 	 
 	@EventHandler
 	public void postLoad(FMLPostInitializationEvent event)
 	{
-		 proxy.postInit();
+		proxy.postInit();
 	}
 
 }

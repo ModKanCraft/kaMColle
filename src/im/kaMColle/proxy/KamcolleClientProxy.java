@@ -21,9 +21,8 @@ public class KamcolleClientProxy extends KamcolleCommonProxy{
 
 	public void init() {
 		// TODO Auto-generated method stub
-		Kamcolle.LOGGER.info("Try Event Regist");
-	    MinecraftForge.EVENT_BUS.register(new RenderPlayerKansou());
-	    Kamcolle.LOGGER.info("Event Regist Finished");
+		registerRenderThings();
+		registerSound();
 	}
 
 	public void postInit() {
@@ -34,6 +33,7 @@ public class KamcolleClientProxy extends KamcolleCommonProxy{
 	public void registerRenderThings() {
 		// TODO Auto-generated method stub
 		RenderingRegistry.registerBlockHandler(new OBJBlockRenderer());
+		MinecraftForge.EVENT_BUS.register(new RenderPlayerKansou());
 	}
 
 	public void registerSound() {

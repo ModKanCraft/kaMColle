@@ -21,7 +21,7 @@ public class FleetSallyBoard extends BlockContainer {
 		super(Material.rock);
 		this.setBlockName("FleetSallyBoard");
 		this.setCreativeTab(Kamcolle.tab);
-		this.setBlockBounds(0F, 0F, 0F, 1F, 0.9F, 1F);
+		this.setBlockBounds(0F, 0F, 0F, 1F, 0.65F, 1F);
 		this.setLightOpacity(0);
 		this.setHardness(0.8F);
 	}
