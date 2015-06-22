@@ -51,7 +51,9 @@ public class Kamcolle {
 	
 
 	
-	
+	public static void LogInfo(Object obj){
+		LOGGER.info(obj);
+	}
 	
 	@EventHandler
 	public void preLoad(FMLPreInitializationEvent event)

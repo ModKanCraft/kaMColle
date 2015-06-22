@@ -1,9 +1,12 @@
 package im.kaMColle.render;
 
 import im.kaMColle.FleetClass;
+import im.kaMColle.KansouAttchments;
 import im.kaMColle.OBJmodels.KamcolleOBJModelResourceManager;
+import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelBoat;
-import net.minecraft.init.Items;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.util.Vec3;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 
 import org.lwjgl.opengl.GL11;
@@ -13,6 +16,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class RenderPlayerKansou {
 	ModelBoat model=new ModelBoat();
 	KamcolleOBJModelResourceManager modelManager=KamcolleOBJModelResourceManager.getManager();
+	private float scale=0.5F;
 	/*这里是笔记：
 	 *[C]LI-狼:
 	 *所以如果你要渲染世界里其他玩家的效果，还得自己处理下变换，不过也不难
@@ -26,26 +30,38 @@ public class RenderPlayerKansou {
 	  * 但是Test2就不用我自己实现啊，果断以后用Test2
 	  */
 	@SubscribeEvent
-	public void renderPlayerKansouTest(RenderPlayerEvent.Specials.Post event){
-		//测试3
-		if(event.entityPlayer.getEntityData().getString("FleetClass").equals("TEST")){
-			GL11.glPushMatrix();
-			GL11.glScalef(1/16F, 1/16F, 1/16F);
-			GL11.glTranslatef(
-					0, 
-					event.renderer.modelBipedMain.bipedLeftLeg.rotationPointY, 
-					event.renderer.modelBipedMain.bipedLeftLeg.rotationPointZ+8
-					);
-			//GL11.glRotatef(event.renderer.modelBipedMain.bipedLeftLeg.rotateAngleX*(180F/(float)Math.PI), 1, 0, 0);
-			GL11.glTranslatef(
-					0, 
-					event.renderer.modelBipedMain.bipedLeftLeg.offsetY, 
-					event.renderer.modelBipedMain.bipedLeftLeg.offsetZ
-					);
-			GL11.glScalef(1/2F, 1/2F, 1/2F);
-			GL11.glRotatef(180, 1, 0, 0);
-			modelManager.renderKansouModel(FleetClass.TEST);
-			GL11.glPopMatrix();
+	public void renderPlayerKansou(RenderPlayerEvent.Specials.Post event){
+		String KansouType=event.entityPlayer.getEntityData().getString("FleetClass");
+		if(KansouType.isEmpty())return;
+		FleetClass Class=FleetClass.valueOf(KansouType);
+		for(KansouAttchments att:Class.Kansou){
+			ModelBiped model=event.renderer.modelBipedMain;
+			if(att.getPart(model)!=null){
+				for(ModelRenderer r:att.getPart(model)){
+					for(Vec3 point:att.offsets){
+						GL11.glPushMatrix();
+						GL11.glScalef(1/16F, 1/16F, 1/16F);//这个比率不用调
+						GL11.glTranslatef(
+								r.rotationPointX, 
+								r.rotationPointY, 
+								r.rotationPointZ
+								);
+						GL11.glRotatef(r.rotateAngleX*(180F/(float)Math.PI), 1, 0, 0);
+						GL11.glRotatef(r.rotateAngleY*(180F/(float)Math.PI), 0, 1, 0);
+						GL11.glRotatef(r.rotateAngleZ*(180F/(float)Math.PI), 0, 0, 1);
+						GL11.glTranslated(
+								point.xCoord, 
+								point.yCoord, 
+								point.zCoord
+								);
+						GL11.glScalef(scale,scale,scale);
+						if(r.mirror)GL11.glScalef(-1F, 0F, 0F);
+						GL11.glRotatef(180, 1, 0, 0);
+						modelManager.renderKansouModel(FleetClass.TEST);
+						GL11.glPopMatrix();
+					}
+				}
+			}
 		}
 	}
 }
