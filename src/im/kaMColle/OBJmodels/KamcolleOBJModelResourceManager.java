@@ -16,17 +16,19 @@ import net.minecraftforge.client.model.IModelCustom;
 
 public class KamcolleOBJModelResourceManager {
 	private static KamcolleOBJModelResourceManager instance;
-	private IModelCustom modelTest;
 
 	HashMap<KansouAttchments,Models> modelsMap=new HashMap();
 	private TextureManager textureManager;//RenderManager.instance.renderEngine;
 	
 	private ResourceLocation modelTestTexture;
 	
+	private IModelCustom modelTorpedoLauncher;
+	private IModelCustom modelTest;
+	
 	private KamcolleOBJModelResourceManager(){
 		textureManager=Minecraft.getMinecraft().renderEngine;
 		modelTest=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/Test.obj"));
-		//modelTorpedoLauncher=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/TorpedoLauncher.obj"));
+		modelTorpedoLauncher=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/torpedo/launcher.obj"));
 		//modelBBTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/BBTurret.obj"));
 		//modelCATurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CATurret.obj"));
 		//modelCLTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CLTurret.obj"));
@@ -39,11 +41,16 @@ public class KamcolleOBJModelResourceManager {
 		//弄好一个加一个
 	}
 	private class Models{
-		IModelCustom model;
-		ResourceLocation texture;
+		IModelCustom model=null;
+		ResourceLocation texture=null;
+		boolean hasTexture=true;
 		Models(IModelCustom model,ResourceLocation texture){
 			this.model=model;
 			this.texture=texture;
+		}
+		Models(IModelCustom model){
+			this.model=model;
+			boolean hasTexture=false;
 		}
 	}
 	
@@ -55,16 +62,18 @@ public class KamcolleOBJModelResourceManager {
 	}
 	public void renderKansouModel(FleetClass Class){
 		if(Class.Kansou==null)return;
-		for(KansouAttchments string:Class.Kansou){
-			Models models=getModel(string);
-			textureManager.bindTexture(models.texture);
-			GL11.glPushMatrix();
+		for(KansouAttchments attType:Class.Kansou){
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
 			GL11.glDisable(GL11.GL_CULL_FACE);
+			Models models=getModel(attType);
+			if(models.hasTexture){
+				textureManager.bindTexture(models.texture);
+			}else{
+				GL11.glColor3f(30F, 30F, 30F);
+			}
 			models.model.renderAll();
 			GL11.glEnable(GL11.GL_CULL_FACE);
 			GL11.glEnable(GL11.GL_TEXTURE_2D);
-			GL11.glPopMatrix();
 		}
 		/*
 	GL11.glPushMatrix();

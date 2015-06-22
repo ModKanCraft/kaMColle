@@ -8,6 +8,13 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.util.Vec3;
 
 public enum KansouAttchments {
+	/**
+	 * 第一个参数字符串是附着的部位，新增的话在getPart方法里面照葫芦画瓢增加case就是了
+	 * 要是直接绑在玩家的身体上（就是Body），那么第一个字符串可以就填一个""或者其他任何【那几个CASE的字符串】
+	 * 后面的Vec3是用来表示偏移位置的
+	 * 每个Vec3代表一个附着位置
+	 * 有多个Vec3就会在这多个Vec3上都进行渲染
+	 */
 	Test("",Vec3.createVectorHelper(0d,0d,0d)),
 	BBTurret("",
 			Vec3.createVectorHelper(0d,0d,0d),
@@ -37,10 +44,13 @@ public enum KansouAttchments {
 		case "leg":
 			r.add(model.bipedLeftLeg);
 			r.add(model.bipedRightLeg);
+			break;
 		case "right arm":
 			r.add(model.bipedRightArm);
+			break;
 		default:
 			r.add(model.bipedBody);
+			break;
 		}
 		return r;
 	}
