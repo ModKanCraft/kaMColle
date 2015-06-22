@@ -24,12 +24,13 @@ public class KamcolleOBJModelResourceManager {
 	
 	private IModelCustom modelTorpedoLauncher;
 	private IModelCustom modelTest;
+	private IModelCustom modelBBTurret;
 	
 	private KamcolleOBJModelResourceManager(){
 		textureManager=Minecraft.getMinecraft().renderEngine;
 		modelTest=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/Test.obj"));
 		modelTorpedoLauncher=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/torpedo/launcher.obj"));
-		//modelBBTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/BBTurret.obj"));
+		modelBBTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/turret/turret_turret.obj"));
 		//modelCATurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CATurret.obj"));
 		//modelCLTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CLTurret.obj"));
 		//modelDDTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/DDTurret.obj"));
@@ -37,6 +38,7 @@ public class KamcolleOBJModelResourceManager {
 		modelTestTexture=new ResourceLocation(Kamcolle.ID,"textures/models/Test.jpg");
 		//...
 		modelsMap.put(KansouAttchments.Test, new Models(modelTest,modelTestTexture));
+		modelsMap.put(KansouAttchments.TorpedoLauncher, new Models(modelTorpedoLauncher));
 		//...
 		//弄好一个加一个
 	}
@@ -47,6 +49,7 @@ public class KamcolleOBJModelResourceManager {
 		Models(IModelCustom model,ResourceLocation texture){
 			this.model=model;
 			this.texture=texture;
+			if(this.texture==null)this.hasTexture=false;
 		}
 		Models(IModelCustom model){
 			this.model=model;

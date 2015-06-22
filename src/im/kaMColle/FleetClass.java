@@ -17,7 +17,7 @@ public enum FleetClass {
 	SCV,
 	SBB,
 	Rei(KansouAttchments.BBTurret,KansouAttchments.TorpedoLauncher,KansouAttchments.BBVLaunchPad),//NANI?!!
-	TEST(KansouAttchments.Test);
+	TEST(KansouAttchments.BBTurret,KansouAttchments.TorpedoLauncher);
 	public KansouAttchments[] Kansou=null;
 	private FleetClass(KansouAttchments... Kansou){
 		this.Kansou=Kansou;
