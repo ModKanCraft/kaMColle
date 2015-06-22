@@ -17,10 +17,10 @@ public enum KansouAttchments {
 	 */
 	Test("",Vec3.createVectorHelper(0d,0d,0d)),
 	BBTurret("",
-			Vec3.createVectorHelper(0d,0d,0d),
-			Vec3.createVectorHelper(0d,0d,0d),
-			Vec3.createVectorHelper(0d,0d,0d),
-			Vec3.createVectorHelper(0d,0d,0d)
+			Vec3.createVectorHelper(60d,0d,0d),
+			Vec3.createVectorHelper(30d,0d,0d),
+			Vec3.createVectorHelper(-30d,0d,0d),
+			Vec3.createVectorHelper(-60d,0d,0d)
 			//四个炮塔的位置
 	), 
 	//只用设置一条腿的偏移，以右腿为参照做右腿的，左腿对称过去
@@ -43,6 +43,7 @@ public enum KansouAttchments {
 		switch(string){
 		case "leg":
 			r.add(model.bipedLeftLeg);
+			r.add(model.bipedHead);
 			r.add(model.bipedRightLeg);
 			break;
 		case "right arm":

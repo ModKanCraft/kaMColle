@@ -16,7 +16,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class RenderPlayerKansou {
 	ModelBoat model=new ModelBoat();
 	KamcolleOBJModelResourceManager modelManager=KamcolleOBJModelResourceManager.getManager();
-	private float scale=0.5F;
+	private float scale=0.1F;
 	/*这里是笔记：
 	 *[C]LI-狼:
 	 *所以如果你要渲染世界里其他玩家的效果，还得自己处理下变换，不过也不难
@@ -55,7 +55,7 @@ public class RenderPlayerKansou {
 								point.zCoord
 								);
 						GL11.glScalef(scale,scale,scale);
-						if(r.mirror)GL11.glScalef(-1F, 0F, 0F);
+						if(r.mirror)GL11.glScalef(-1F, 1F, 1F);
 						GL11.glRotatef(180, 1, 0, 0);
 						modelManager.renderKansouModel(FleetClass.TEST);
 						GL11.glPopMatrix();

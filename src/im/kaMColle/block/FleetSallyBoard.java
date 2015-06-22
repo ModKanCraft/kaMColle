@@ -48,7 +48,7 @@ public class FleetSallyBoard extends BlockContainer {
 			if(!player.getEntityData().getString("FleetClass").isEmpty()){
 				player.getEntityData().removeTag("FleetClass");
 			}else{
-				player.getEntityData().setString("FleetClass", "BB");
+				player.getEntityData().setString("FleetClass", "TEST");
 			}
 		}
 	}
