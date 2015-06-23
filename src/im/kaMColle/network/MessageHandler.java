@@ -16,8 +16,6 @@ public class MessageHandler {
 			int idx = 0;
 
 			INSTANCE.registerMessage(KamcolleGUIMessage.class, KamcolleGUIMessage.class, idx++, Side.SERVER);
-					//PacketUnitChanged.class, PacketUnitChanged.class, idx++, Side.SERVER);
-			//INSTANCE.registerMessage(PacketTileEntity.class, PacketTileEntity.class, idx++, Side.CLIENT);
 		}
 		
 	}
