@@ -24,33 +24,36 @@ public class KamcolleOBJModelResourceManager {
 	
 	private IModelCustom modelTorpedoLauncher;
 	private IModelCustom modelTest;
+	private IModelCustom modelBBTurret;
 	
 	private KamcolleOBJModelResourceManager(){
 		textureManager=Minecraft.getMinecraft().renderEngine;
 		modelTest=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/Test.obj"));
 		modelTorpedoLauncher=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/torpedo/launcher.obj"));
-		//modelBBTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/BBTurret.obj"));
+		modelBBTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/turret/turret_turret.obj"));
 		//modelCATurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CATurret.obj"));
 		//modelCLTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CLTurret.obj"));
 		//modelDDTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/DDTurret.obj"));
 		//...
 		modelTestTexture=new ResourceLocation(Kamcolle.ID,"textures/models/Test.jpg");
 		//...
-		modelsMap.put(KansouAttchments.Test, new Models(modelTest,modelTestTexture));
+		modelsMap.put(KansouAttchments.Test, new Models(modelTest));
+		modelsMap.put(KansouAttchments.TorpedoLauncher, new Models(modelTorpedoLauncher));
+		modelsMap.put(KansouAttchments.BBTurret, new Models(modelBBTurret));
 		//...
 		//弄好一个加一个
 	}
 	private class Models{
 		IModelCustom model=null;
 		ResourceLocation texture=null;
-		boolean hasTexture=true;
+		boolean hasTexture=false;
 		Models(IModelCustom model,ResourceLocation texture){
 			this.model=model;
 			this.texture=texture;
+			if(this.texture!=null)this.hasTexture=true;
 		}
 		Models(IModelCustom model){
 			this.model=model;
-			boolean hasTexture=false;
 		}
 	}
 	
@@ -63,12 +66,12 @@ public class KamcolleOBJModelResourceManager {
 	public void renderKansouModel(FleetClass Class){
 		if(Class.Kansou==null)return;
 		for(KansouAttchments attType:Class.Kansou){
-			GL11.glDisable(GL11.GL_TEXTURE_2D);
 			GL11.glDisable(GL11.GL_CULL_FACE);
 			Models models=getModel(attType);
 			if(models.hasTexture){
 				textureManager.bindTexture(models.texture);
 			}else{
+				GL11.glDisable(GL11.GL_TEXTURE_2D);
 				GL11.glColor3f(30F, 30F, 30F);
 			}
 			models.model.renderAll();

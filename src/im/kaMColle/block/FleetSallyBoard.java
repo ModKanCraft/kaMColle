@@ -45,7 +45,7 @@ public class FleetSallyBoard extends BlockContainer {
 		if(entity instanceof EntityPlayer){
 			EntityPlayer player=(EntityPlayer) entity;
 			Kamcolle.LOGGER.log(Level.INFO, player.toString());
-			if(player.getEntityData().getString("FleetClass").equals("TEST")){
+			if(!player.getEntityData().getString("FleetClass").isEmpty()){
 				player.getEntityData().removeTag("FleetClass");
 			}else{
 				player.getEntityData().setString("FleetClass", "TEST");
