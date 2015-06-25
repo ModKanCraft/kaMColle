@@ -5,6 +5,8 @@ import im.kaMColle.config.KamcolleConfig;
 import im.kaMColle.handleevent.PlayerWithKandouInWaterHandler;
 import im.kaMColle.init.KamcolleBlocks;
 import im.kaMColle.init.KamcolleItems;
+import im.kaMColle.network.KamcolleKansouChange;
+import im.kaMColle.network.MessageHandler;
 import im.kaMColle.proxy.KamcolleClientProps;
 import im.kaMColle.proxy.KamcolleClientProxy;
 import im.kaMColle.proxy.KamcolleCommonProxy;
@@ -52,7 +54,10 @@ public class Kamcolle {
 
 	
 	public static void LogInfo(Object obj){
-		LOGGER.info(obj);
+		if(obj==null)
+			LOGGER.info("null");
+		else
+			LOGGER.info(obj);
 	}
 	
 	@EventHandler
@@ -74,7 +79,9 @@ public class Kamcolle {
 	{	
 	    //EntityRegistry.addSpawn(EntityWoodKarakuriNingyG.class, 10, 4, 4, EnumCreatureType.monster);
 		proxy.init();
+		MessageHandler.init();
 		MinecraftForge.EVENT_BUS.register(new PlayerWithKandouInWaterHandler());
+		MinecraftForge.EVENT_BUS.register(new KamcolleKansouChange());
 	    //GameRegistry.addRecipe(new ItemStack(sth, 1), new Object[]{"XYX",Character.valueOf('X'),s,Character.valueOf('Y'),th});
 	}
 	 

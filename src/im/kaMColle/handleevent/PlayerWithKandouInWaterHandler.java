@@ -8,6 +8,7 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 
 public class PlayerWithKandouInWaterHandler {
 	@SubscribeEvent
@@ -38,5 +39,9 @@ public class PlayerWithKandouInWaterHandler {
 				player.motionY=0;
 			}
 		}
+	}
+	@SubscribeEvent
+	public void syncFleetClassOnPlayerConstruct(PlayerEvent.PlayerLoggedInEvent e){
+		
 	}
 }

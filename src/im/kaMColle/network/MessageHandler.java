@@ -7,17 +7,12 @@ import cpw.mods.fml.relauncher.Side;
 
 public class MessageHandler {
 
+	public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Kamcolle.ID);
 
-	public static class MessagePacketHandler {
-		
-		public static final SimpleNetworkWrapper INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(Kamcolle.ID);
-
-		public static void init() {
-			int idx = 0;
-
-			INSTANCE.registerMessage(KamcolleGUIMessage.class, KamcolleGUIMessage.class, idx++, Side.SERVER);
-		}
+	public static void init() {
+		int idx = 0;
+		INSTANCE.registerMessage(KamcolleKansouChange.class, KamcolleKansouChange.class, idx++, Side.SERVER);
+		INSTANCE.registerMessage(KamcolleKansouChange.class, KamcolleKansouChange.class, idx++, Side.CLIENT);
 		
 	}
-
 }

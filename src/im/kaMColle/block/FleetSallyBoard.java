@@ -1,8 +1,9 @@
 package im.kaMColle.block;
 
-import org.apache.logging.log4j.Level;
-
+import im.kaMColle.FleetClass;
 import im.kaMColle.Kamcolle;
+import im.kaMColle.network.KamcolleKansouChange;
+import im.kaMColle.network.MessageHandler;
 import im.kaMColle.tileEntity.SallyBoardTileEntity;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -13,7 +14,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class FleetSallyBoard extends BlockContainer {
 
@@ -24,6 +28,7 @@ public class FleetSallyBoard extends BlockContainer {
 		this.setBlockBounds(0F, 0F, 0F, 1F, 0.65F, 1F);
 		this.setLightOpacity(0);
 		this.setHardness(0.8F);
+		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@Override
@@ -42,17 +47,20 @@ public class FleetSallyBoard extends BlockContainer {
 	 */
 	@Override
 	public void onEntityWalking(World world, int x, int y, int z, Entity entity){
-		if(entity instanceof EntityPlayer){
+		if(entity instanceof EntityPlayer&&entity.worldObj.isRemote){
 			EntityPlayer player=(EntityPlayer) entity;
-			Kamcolle.LOGGER.log(Level.INFO, player.toString());
-			if(!player.getEntityData().getString("FleetClass").isEmpty()){
+			if(!(player.getEntityData().getString("FleetClass").isEmpty()||player.getEntityData().getString("FleetClass").equals("NULL"))){
 				player.getEntityData().removeTag("FleetClass");
+				KamcolleKansouChange a=KamcolleKansouChange.getKansouChangePacket(player, FleetClass.NULL);
+				MessageHandler.INSTANCE.sendToServer(a);
 			}else{
 				player.getEntityData().setString("FleetClass", "TEST");
+				KamcolleKansouChange a=KamcolleKansouChange.getKansouChangePacket(player, FleetClass.TEST);
+				MessageHandler.INSTANCE.sendToServer(a);
 			}
 		}
 	}
-	@Override
+	@SideOnly(Side.CLIENT)
 	public boolean addHitEffects(World worldObj, MovingObjectPosition target, EffectRenderer effectRenderer)
     {
 		effectRenderer.clearEffects(worldObj);
@@ -60,8 +68,7 @@ public class FleetSallyBoard extends BlockContainer {
 		
         return true;
     }
-	
-	@Override
+	@SideOnly(Side.CLIENT)
 	public boolean addDestroyEffects(World world, int x, int y, int z, int meta, EffectRenderer effectRenderer)
     {
 		effectRenderer.clearEffects(world);
@@ -70,11 +77,9 @@ public class FleetSallyBoard extends BlockContainer {
         return true;
     }
 	
-	@Override
 	public boolean isOpaqueCube(){
 		return false;
 	}
-	@Override
 	public int getRenderType(){
 		return 3939;
 	}
