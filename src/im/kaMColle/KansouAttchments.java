@@ -25,7 +25,7 @@ public enum KansouAttchments {
 			//四个炮塔的位置
 	), 
 	//只用设置一条腿的偏移，以右腿为参照做右腿的，左腿会自行对称过去
-	TorpedoLauncher("leg",0.1d,Point.get(0d,0d,0d)),
+	TorpedoLauncher("leg",0.08d,Point.get(2d,-4d,0d)),
 	//飞行甲板只有一个
 	BBVLaunchPad("right arm",0.1d,Point.get(0d,0d,0d)),
 	CVLaunchPad("",0.1d),//这个没想好

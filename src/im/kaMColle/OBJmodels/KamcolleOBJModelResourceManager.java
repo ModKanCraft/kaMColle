@@ -31,7 +31,7 @@ public class KamcolleOBJModelResourceManager {
 	private KamcolleOBJModelResourceManager(){
 		textureManager=Minecraft.getMinecraft().renderEngine;
 		modelTest=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/Test.obj"));
-		//modelTorpedoLauncher=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/torpedo/launcher.obj"));
+		modelTorpedoLauncher=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/torpedo/launcher.obj"));
 		modelBBTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/turret/BBTurret.obj"));
 		//modelCATurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CATurret.obj"));
 		//modelCLTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CLTurret.obj"));
@@ -41,7 +41,7 @@ public class KamcolleOBJModelResourceManager {
 		modelBBTurretTexture=new ResourceLocation(Kamcolle.ID,"textures/models/BBturret.png");
 		//...
 		modelsMap.put(KansouAttchments.Test, new Models(modelTest));
-		//modelsMap.put(KansouAttchments.TorpedoLauncher, new Models(modelTorpedoLauncher));
+		modelsMap.put(KansouAttchments.TorpedoLauncher, new Models(modelTorpedoLauncher));
 		modelsMap.put(KansouAttchments.BBTurret, new Models(modelBBTurret,modelBBTurretTexture));
 		//...
 		//弄好一个加一个
@@ -76,6 +76,7 @@ public class KamcolleOBJModelResourceManager {
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
 			GL11.glColor3f(30F, 30F, 30F);
 		}
+		GL11.glScalef(-1F, 1F, 1F);
 		GL11.glRotatef(90F, 1, 0, 0);
 		models.model.renderAll();
 		GL11.glEnable(GL11.GL_CULL_FACE);

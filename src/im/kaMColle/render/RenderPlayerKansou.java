@@ -48,6 +48,7 @@ public class RenderPlayerKansou {
 						GL11.glRotatef(r.rotateAngleX*(180F/(float)Math.PI), 1, 0, 0);
 						GL11.glRotatef(r.rotateAngleY*(180F/(float)Math.PI), 0, 1, 0);
 						GL11.glRotatef(r.rotateAngleZ*(180F/(float)Math.PI), 0, 0, 1);
+						if(r.mirror)GL11.glScalef(-1F, 1F, 1F);
 						GL11.glTranslated(
 								-point.x, 
 								-point.y, 
@@ -55,7 +56,6 @@ public class RenderPlayerKansou {
 								);
 						double scale=att.scale;
 						GL11.glScaled(scale,scale,scale);
-						if(r.mirror)GL11.glScalef(-1F, 1F, 1F);
 						modelManager.renderKansouModel(att);
 						GL11.glPopMatrix();
 					}

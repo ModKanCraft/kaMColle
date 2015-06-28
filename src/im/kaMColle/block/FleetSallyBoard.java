@@ -30,19 +30,13 @@ public class FleetSallyBoard extends BlockContainer {
 		this.setBlockBounds(0F, 0F, 0F, 1F, 0.65F, 1F);
 		this.setLightOpacity(0);
 		this.setHardness(0.8F);
-		MinecraftForge.EVENT_BUS.register(this);
 	}
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int par2) {
 		return new SallyBoardTileEntity();
 	}
-	/*
-		@SubscribeEvent
-	public void test(LivingUpdateEvent e){
-		Kamcolle.LogInfo(e.entity.getEntityData().getString("FleetClass"));
-	}
-*/
+	
 	/**
 	 * 
 	 * @param world
@@ -62,7 +56,7 @@ public class FleetSallyBoard extends BlockContainer {
 				KamcolleKansouChange a=KamcolleKansouChange.getKansouChangePacket(player, FleetClass.NULL);
 				MessageHandler.INSTANCE.sendToServer(a);
 			}else{;
-				KamcolleKansouChange a=KamcolleKansouChange.getKansouChangePacket(player, FleetClass.BB);
+				KamcolleKansouChange a=KamcolleKansouChange.getKansouChangePacket(player, FleetClass.CL);
 				MessageHandler.INSTANCE.sendToServer(a);
 			}
 		}

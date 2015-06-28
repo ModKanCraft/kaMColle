@@ -4,7 +4,7 @@ package im.kaMColle;
 public enum FleetClass {
 	//SS("SSKansou"),
 	DD(KansouAttchments.DDTurret,KansouAttchments.TorpedoLauncher),
-	CL(KansouAttchments.CLTurret,KansouAttchments.TorpedoLauncher),
+	CL(/*KansouAttchments.CLTurret,*/KansouAttchments.TorpedoLauncher),
 	CA(KansouAttchments.CATurret,KansouAttchments.TorpedoLauncher),
 	CV(KansouAttchments.CVLaunchPad),
 	BB(KansouAttchments.BBTurret),
@@ -17,7 +17,7 @@ public enum FleetClass {
 	SCV,
 	SBB,
 	REI(KansouAttchments.BBTurret,KansouAttchments.TorpedoLauncher,KansouAttchments.BBVLaunchPad),//NANI?!!
-	TEST(),
+	TEST(KansouAttchments.Test),
 	NULL();
 	public KansouAttchments[] Kansou=null;
 	private FleetClass(KansouAttchments... Kansou){
