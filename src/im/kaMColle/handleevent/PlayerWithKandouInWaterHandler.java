@@ -1,5 +1,6 @@
 package im.kaMColle.handleevent;
 
+import im.kaMColle.FleetClass;
 import im.kaMColle.Kamcolle;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -16,7 +17,8 @@ public class PlayerWithKandouInWaterHandler {
 		if(event.entity instanceof EntityPlayer){
 			EntityPlayer player=(EntityPlayer) event.entity;
 			if(player.worldObj.isAABBInMaterial(player.boundingBox, Material.water)){
-				if(!player.getEntityData().getString("FleetClass").isEmpty())floatPlayerOnWater(player);
+				
+				if(!(player.getEntityData().getString("FleetClass").isEmpty()||player.getEntityData().getString("FleetClass").equals("NULL")))floatPlayerOnWater(player);
 			}
 		}
 	}
@@ -36,7 +38,7 @@ public class PlayerWithKandouInWaterHandler {
 			if(player.motionY<-0.01D||player.motionY>0.01D){
 				player.motionY/=2;
 			}else{
-				player.motionY=0;
+				player.motionY+=0.01;
 			}
 		}
 	}

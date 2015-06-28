@@ -16,6 +16,8 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -35,6 +37,12 @@ public class FleetSallyBoard extends BlockContainer {
 	public TileEntity createNewTileEntity(World world, int par2) {
 		return new SallyBoardTileEntity();
 	}
+	/*
+		@SubscribeEvent
+	public void test(LivingUpdateEvent e){
+		Kamcolle.LogInfo(e.entity.getEntityData().getString("FleetClass"));
+	}
+*/
 	/**
 	 * 
 	 * @param world
@@ -47,15 +55,14 @@ public class FleetSallyBoard extends BlockContainer {
 	 */
 	@Override
 	public void onEntityWalking(World world, int x, int y, int z, Entity entity){
+		Kamcolle.LogInfo(entity);
 		if(entity instanceof EntityPlayer&&entity.worldObj.isRemote){
 			EntityPlayer player=(EntityPlayer) entity;
 			if(!(player.getEntityData().getString("FleetClass").isEmpty()||player.getEntityData().getString("FleetClass").equals("NULL"))){
-				player.getEntityData().removeTag("FleetClass");
 				KamcolleKansouChange a=KamcolleKansouChange.getKansouChangePacket(player, FleetClass.NULL);
 				MessageHandler.INSTANCE.sendToServer(a);
-			}else{
-				player.getEntityData().setString("FleetClass", "TEST");
-				KamcolleKansouChange a=KamcolleKansouChange.getKansouChangePacket(player, FleetClass.TEST);
+			}else{;
+				KamcolleKansouChange a=KamcolleKansouChange.getKansouChangePacket(player, FleetClass.BB);
 				MessageHandler.INSTANCE.sendToServer(a);
 			}
 		}

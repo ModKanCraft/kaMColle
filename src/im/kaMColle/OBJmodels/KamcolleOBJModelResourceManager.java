@@ -21,25 +21,28 @@ public class KamcolleOBJModelResourceManager {
 	private TextureManager textureManager;//RenderManager.instance.renderEngine;
 	
 	private ResourceLocation modelTestTexture;
+	private ResourceLocation modelBBTurretTexture;
 	
 	private IModelCustom modelTorpedoLauncher;
 	private IModelCustom modelTest;
 	private IModelCustom modelBBTurret;
+
 	
 	private KamcolleOBJModelResourceManager(){
 		textureManager=Minecraft.getMinecraft().renderEngine;
 		modelTest=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/Test.obj"));
-		modelTorpedoLauncher=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/torpedo/launcher.obj"));
-		modelBBTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/turret/turret_turret.obj"));
+		//modelTorpedoLauncher=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/torpedo/launcher.obj"));
+		modelBBTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/turret/BBTurret.obj"));
 		//modelCATurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CATurret.obj"));
 		//modelCLTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CLTurret.obj"));
 		//modelDDTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/DDTurret.obj"));
 		//...
-		modelTestTexture=new ResourceLocation(Kamcolle.ID,"textures/models/Test.jpg");
+		modelTestTexture=new ResourceLocation(Kamcolle.ID,"textures/checkboard.tga");
+		modelBBTurretTexture=new ResourceLocation(Kamcolle.ID,"textures/models/BBturret.png");
 		//...
 		modelsMap.put(KansouAttchments.Test, new Models(modelTest));
-		modelsMap.put(KansouAttchments.TorpedoLauncher, new Models(modelTorpedoLauncher));
-		modelsMap.put(KansouAttchments.BBTurret, new Models(modelBBTurret));
+		//modelsMap.put(KansouAttchments.TorpedoLauncher, new Models(modelTorpedoLauncher));
+		modelsMap.put(KansouAttchments.BBTurret, new Models(modelBBTurret,modelBBTurretTexture));
 		//...
 		//弄好一个加一个
 	}
@@ -63,51 +66,29 @@ public class KamcolleOBJModelResourceManager {
 		}
 		return instance;
 	}
-	public void renderKansouModel(FleetClass Class){
-		if(Class.Kansou==null)return;
-		for(KansouAttchments attType:Class.Kansou){
-			GL11.glDisable(GL11.GL_CULL_FACE);
-			Models models=getModel(attType);
-			if(models.hasTexture){
-				textureManager.bindTexture(models.texture);
-			}else{
-				GL11.glDisable(GL11.GL_TEXTURE_2D);
-				GL11.glColor3f(30F, 30F, 30F);
-			}
-			models.model.renderAll();
-			GL11.glEnable(GL11.GL_CULL_FACE);
-			GL11.glEnable(GL11.GL_TEXTURE_2D);
-		}
-		/*
-	GL11.glPushMatrix();
-		switch(Class){
-		case TEST:
-			//textureManager.bindTexture(modelTestTexture);
+	public void renderKansouModel(KansouAttchments att){
+		GL11.glPushMatrix();
+		GL11.glDisable(GL11.GL_CULL_FACE);
+		Models models=getModel(att);
+		if(models.hasTexture){
+			textureManager.bindTexture(models.texture);
+		}else{
 			GL11.glDisable(GL11.GL_TEXTURE_2D);
-			GL11.glDisable(GL11.GL_CULL_FACE);
 			GL11.glColor3f(30F, 30F, 30F);
-			ArrayList<String> names = new ArrayList();
-			for(GroupObject object:((WavefrontObject) modelTest).groupObjects){
-				names.add(object.name);
-			}
-			for(String name:names){
-				modelTest.renderPart(name);
-			}
-			GL11.glEnable(GL11.GL_CULL_FACE);
-			GL11.glEnable(GL11.GL_TEXTURE_2D);
-			break;
-		default:
-			break;
 		}
+		GL11.glRotatef(90F, 1, 0, 0);
+		models.model.renderAll();
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glPopMatrix();
-*/
 	}
 	public void renderModelSallyBoard(){
 		
 	}
 	private Models getModel(KansouAttchments type){
-		if(modelsMap.containsKey(type))return modelsMap.get(type);
-		Kamcolle.LogInfo("No Such A Model,Return Model Test!");
+		if(modelsMap.containsKey(type))
+			return modelsMap.get(type);
+		Kamcolle.LogInfo("No Such A Model For Attchment:"+type.name()+",Return Model Test!");
 		return modelsMap.get(KansouAttchments.Test);
 	}
 }

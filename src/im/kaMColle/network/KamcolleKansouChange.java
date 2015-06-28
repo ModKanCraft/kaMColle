@@ -71,9 +71,10 @@ IMessageHandler<KamcolleKansouChange, KamcolleKansouChange>{
 	public void toBytes(ByteBuf buf) {
 		// TODO Auto-generated method stub
 		try{
+			byte[] bs=this.player.getDisplayName().getBytes();
 			buf.writeInt(this.id);
-			buf.writeByte(this.player.getDisplayName().length());
-			buf.writeBytes(this.player.getDisplayName().getBytes());
+			buf.writeByte(bs.length);
+			buf.writeBytes(bs);
 			if(this.fleetClass==null){
 				buf.writeByte(0);
 				return;
@@ -89,7 +90,6 @@ IMessageHandler<KamcolleKansouChange, KamcolleKansouChange>{
 
 	@Override
 	public KamcolleKansouChange onMessage(KamcolleKansouChange message, MessageContext ctx) {
-		Kamcolle.LogInfo(message.id);
 		if(message.player==null)return null;
 		if(FMLCommonHandler.instance().getEffectiveSide().equals(Side.SERVER)){
 			//服务端处理消息

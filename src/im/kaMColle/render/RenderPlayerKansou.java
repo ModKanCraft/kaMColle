@@ -16,7 +16,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class RenderPlayerKansou {
 	ModelBoat model=new ModelBoat();
 	KamcolleOBJModelResourceManager modelManager=KamcolleOBJModelResourceManager.getManager();
-	private float scale=0.1F;
 	/*这里是笔记：
 	 *[C]LI-狼:
 	 *所以如果你要渲染世界里其他玩家的效果，还得自己处理下变换，不过也不难
@@ -38,7 +37,7 @@ public class RenderPlayerKansou {
 			ModelBiped model=event.renderer.modelBipedMain;
 			if(att.getPart(model)!=null){
 				for(ModelRenderer r:att.getPart(model)){
-					for(Vec3 point:att.offsets){
+					for(KansouAttchments.Point point:att.offsets){
 						GL11.glPushMatrix();
 						GL11.glScalef(1/16F, 1/16F, 1/16F);//这个比率不用调
 						GL11.glTranslatef(
@@ -50,14 +49,14 @@ public class RenderPlayerKansou {
 						GL11.glRotatef(r.rotateAngleY*(180F/(float)Math.PI), 0, 1, 0);
 						GL11.glRotatef(r.rotateAngleZ*(180F/(float)Math.PI), 0, 0, 1);
 						GL11.glTranslated(
-								point.xCoord, 
-								point.yCoord, 
-								point.zCoord
+								-point.x, 
+								-point.y, 
+								-point.z
 								);
-						GL11.glScalef(scale,scale,scale);
+						double scale=att.scale;
+						GL11.glScaled(scale,scale,scale);
 						if(r.mirror)GL11.glScalef(-1F, 1F, 1F);
-						GL11.glRotatef(180, 1, 0, 0);
-						modelManager.renderKansouModel(FleetClass.TEST);
+						modelManager.renderKansouModel(att);
 						GL11.glPopMatrix();
 					}
 				}
