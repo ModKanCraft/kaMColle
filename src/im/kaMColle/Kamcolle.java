@@ -46,7 +46,7 @@ public class Kamcolle {
 	
 	@Instance("kamcolle")
 	public static Kamcolle instance;
-	public static KamcolleCreativeTab tab=new KamcolleCreativeTab("kanceaft");
+	public static KamcolleCreativeTab TAB=new KamcolleCreativeTab("kanceaft");
 	
 	public static FleetSallyBoard blockSallyBoard=new FleetSallyBoard();
 	
