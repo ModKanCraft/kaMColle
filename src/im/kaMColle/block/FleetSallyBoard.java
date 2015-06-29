@@ -2,13 +2,11 @@ package im.kaMColle.block;
 
 import im.kaMColle.FleetClass;
 import im.kaMColle.Kamcolle;
-import im.kaMColle.GUI.KansouChangeGUI;
 import im.kaMColle.network.KamcolleKansouChange;
 import im.kaMColle.network.MessageHandler;
 import im.kaMColle.tileEntity.SallyBoardTileEntity;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,7 +26,7 @@ public class FleetSallyBoard extends BlockContainer {
 	public FleetSallyBoard() {
 		super(Material.rock);
 		this.setBlockName("FleetSallyBoard");
-		this.setCreativeTab(Kamcolle.TAB);
+		this.setCreativeTab(Kamcolle.tab);
 		this.setBlockBounds(0F, 0F, 0F, 1F, 0.65F, 1F);
 		this.setLightOpacity(0);
 		this.setHardness(0.8F);
@@ -51,8 +49,16 @@ public class FleetSallyBoard extends BlockContainer {
 	 */
 	@Override
 	public void onEntityWalking(World world, int x, int y, int z, Entity entity){
-		if(entity==Minecraft.getMinecraft().thePlayer&&entity.worldObj.isRemote){
-			Minecraft.getMinecraft().displayGuiScreen(new KansouChangeGUI());
+		Kamcolle.LogInfo(entity);
+		if(entity instanceof EntityPlayer&&entity.worldObj.isRemote){
+			EntityPlayer player=(EntityPlayer) entity;
+			if(!(player.getEntityData().getString("FleetClass").isEmpty()||player.getEntityData().getString("FleetClass").equals("NULL"))){
+				KamcolleKansouChange a=KamcolleKansouChange.getKansouChangePacket(player, FleetClass.NULL);
+				MessageHandler.INSTANCE.sendToServer(a);
+			}else{;
+				KamcolleKansouChange a=KamcolleKansouChange.getKansouChangePacket(player, FleetClass.CL);
+				MessageHandler.INSTANCE.sendToServer(a);
+			}
 		}
 	}
 	@SideOnly(Side.CLIENT)
