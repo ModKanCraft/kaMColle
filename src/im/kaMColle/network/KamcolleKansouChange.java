@@ -103,7 +103,11 @@ IMessageHandler<KamcolleKansouChange, KamcolleKansouChange>{
 				}
 				break;
 			case 1:
-				message.player.getEntityData().setString("FleetClass", message.fleetClass.name());
+				if(message.fleetClass.equals(fleetClass.NULL)){
+					message.player.getEntityData().removeTag("FleetClass");
+				}else{
+					message.player.getEntityData().setString("FleetClass", message.fleetClass.name());
+				}
 				for(Object o:message.player.worldObj.playerEntities){
 					EntityPlayer p=(EntityPlayer)o;
 					MessageHandler.INSTANCE.sendTo(
@@ -114,7 +118,11 @@ IMessageHandler<KamcolleKansouChange, KamcolleKansouChange>{
 			//客户端处理消息
 			switch(message.id){
 			case 0:
-				message.player.getEntityData().setString("FleetClass", message.fleetClass.name());
+				if(message.fleetClass.equals(fleetClass.NULL)){
+					message.player.getEntityData().removeTag("FleetClass");
+				}else{
+					message.player.getEntityData().setString("FleetClass", message.fleetClass.name());
+				}
 			}
 		}
 		return null;

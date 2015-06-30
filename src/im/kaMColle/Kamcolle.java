@@ -2,7 +2,7 @@ package im.kaMColle;
 
 import im.kaMColle.block.FleetSallyBoard;
 import im.kaMColle.config.KamcolleConfig;
-import im.kaMColle.handleevent.PlayerWithKandouInWaterHandler;
+import im.kaMColle.handleEvent.PlayerWithKandouInWaterHandler;
 import im.kaMColle.init.KamcolleBlocks;
 import im.kaMColle.init.KamcolleItems;
 import im.kaMColle.network.KamcolleKansouChange;
@@ -46,7 +46,7 @@ public class Kamcolle {
 	
 	@Instance("kamcolle")
 	public static Kamcolle instance;
-	public static KamcolleCreativeTab tab=new KamcolleCreativeTab("kanceaft");
+	public static KamcolleCreativeTab TAB=new KamcolleCreativeTab("kanceaft");
 	
 	public static FleetSallyBoard blockSallyBoard=new FleetSallyBoard();
 	

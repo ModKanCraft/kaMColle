@@ -1,4 +1,4 @@
-package im.kaMColle.handleevent;
+package im.kaMColle.handleEvent;
 
 import im.kaMColle.FleetClass;
 import im.kaMColle.Kamcolle;
