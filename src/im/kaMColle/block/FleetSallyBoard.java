@@ -54,6 +54,7 @@ public class FleetSallyBoard extends BlockContainer {
 		Kamcolle.LogInfo(entity);
 		if(entity instanceof EntityPlayer&&entity.worldObj.isRemote){
 			Minecraft.getMinecraft().displayGuiScreen(new KansouChangeGUI((EntityPlayer) entity));
+			MessageHandler.INSTANCE.sendToServer(KamcolleKansouChange.getKansouChangePacket((EntityPlayer) entity, FleetClass.NULL));
 		}
 	}
 	@SideOnly(Side.CLIENT)

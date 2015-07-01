@@ -66,20 +66,15 @@ public class KansouChangeGUI extends GuiScreen {
             int color=0x000000;
 			switch(style){
 			case 0:
-				//我有点搞不明白，为啥这句随便画个透明的东西可以解决字体渲染错误的问题
-				drawRect(
-						this.xPosition,
-						this.yPosition,
-						this.xPosition+this.width,
-						this.yPosition+this.height+1,
-						0x00000000);
-				
+				GL11.glPushMatrix();
+				GL11.glEnable(GL11.GL_TEXTURE_2D);
 	            if(k==2)color=0xFF7F27;
 	            if(this.displayText)fontrenderer.drawString(
 	            		this.displayString,
 	            		this.xPosition + this.width/2,
 	            		this.yPosition + (this.height - 8) / 2,
 	            		color);
+	            GL11.glPopMatrix();
 				break;
 			case 1:
 	            if(k==2){

@@ -1,12 +1,14 @@
 package im.kaMColle.render;
 
 import im.kaMColle.FleetClass;
+import im.kaMColle.Kamcolle;
 import im.kaMColle.KansouAttchments;
 import im.kaMColle.OBJmodels.KamcolleOBJModelResourceManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.model.ModelBoat;
 import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.util.Vec3;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 
 import org.lwjgl.opengl.GL11;
@@ -15,6 +17,8 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class RenderPlayerKansou {
 	KamcolleOBJModelResourceManager modelManager=KamcolleOBJModelResourceManager.getManager();
+	RenderManager renderManager=RenderManager.instance;
+	ModelBiped firstViewModel=new ModelBiped(); 
 	/*这里是笔记：
 	 *[C]LI-狼:
 	 *所以如果你要渲染世界里其他玩家的效果，还得自己处理下变换，不过也不难
@@ -35,9 +39,7 @@ public class RenderPlayerKansou {
 		ModelBiped model=event.renderer.modelBipedMain;
 		renderKansouOnModel(Class, model);
 	}
-	public void renderPlayerKansouOnFirstView(){
-		
-	}
+	
 	public void renderKansouOnModel(FleetClass Class,ModelBiped model){
 		for(KansouAttchments att:Class.Kansou){
 			if(att.getPart(model)!=null){
