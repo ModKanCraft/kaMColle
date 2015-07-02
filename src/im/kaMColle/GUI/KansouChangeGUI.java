@@ -1,7 +1,10 @@
 package im.kaMColle.GUI;
 
+import im.kaMColle.FleetClass;
 import im.kaMColle.Kamcolle;
 import im.kaMColle.item.KamcolleFleetCard;
+import im.kaMColle.network.KamcolleKansouChange;
+import im.kaMColle.network.MessageHandler;
 
 import java.util.ArrayList;
 
@@ -43,6 +46,11 @@ public class KansouChangeGUI extends GuiScreen {
 				this.displayString=s;
 				this.displayText=true;
 			}
+			return this;
+		}
+		public  KamcolleButton setDisplayText(ItemStack item){
+				this.displayString=FleetClass.getClassLocalNameByID(item.getItemDamage())+" "+item.getDisplayName();
+				this.displayText=true;
 			return this;
 		}
 		public void drawButton(Minecraft mc, int mouseX, int mouseY){
@@ -145,17 +153,25 @@ public class KansouChangeGUI extends GuiScreen {
 	public void drawScreen(int par1, int par2, float par3)
     {
         //在这里绘制文本或纹理等非控件内容,这里绘制的东西会被控件(即按键)盖住.
+		KamcolleButton kbtn;
+		ItemStack item;
         mc.renderEngine.bindTexture(texture);
         func_152125_a(width-getRelativeResolution(284), 0, 0, 0, 284, 239, getRelativeResolution(284), height, 284, 239);//参数分别为x,y,u,v,u宽度,v高度(即纹理中欲绘制区域的宽高),实际宽,实际高,纹理总宽,纹理总高.
         for(int i=1;i<=10;i++){
-        	KamcolleButton kbtn=(KamcolleButton)this.buttonList.get(i);
     		String s;
+        	kbtn=(KamcolleButton)this.buttonList.get(i);
         	try{
-        		s=FleetCard.get(getCardIndex(i-1)).getDisplayName();
+            	item=FleetCard.get(getCardIndex(i-1));
+            	kbtn.setDisplayText(item);
         	}catch(IndexOutOfBoundsException e){
-        		s="";
+        		kbtn.enabled=false;
+        		kbtn.setDisplayText("");
+        		continue;
+        	}catch(NullPointerException e){
+        		s="NULL";
+        		kbtn.setDisplayText(s);
         	}
-        	kbtn.setDisplayText(s);
+        	kbtn.enabled=true;
         }
         //在这里绘制文本或纹理等非控件内容,这里绘制的东西会被控件(即按键)盖住.
         super.drawScreen(par1,par2,par3);
@@ -163,10 +179,26 @@ public class KansouChangeGUI extends GuiScreen {
         
         //在这里绘制文本或纹理等非控件内容,这里绘制的东西会盖在控件(即按键)之上.
     }
+	
+	protected void actionPerformed(GuiButton button){
+		if(button.id==0){
+			MessageHandler.INSTANCE.sendToServer(KamcolleKansouChange.getKansouChangePacket(player, FleetClass.NULL));
+			closeGUI();
+		}else if(button.id<=10){
+			MessageHandler.INSTANCE.sendToServer(KamcolleKansouChange.getKansouChangePacket(player, FleetClass.getClassByID(FleetCard.get(getCardIndex(button.id-1)).getItemDamage())));
+			closeGUI();
+		}
+	}
+	private void closeGUI(){
+		//实现关闭动画
+		this.player.closeScreen();
+	}
+	
 	private int getCardIndex(int i){
 		return i+(this.page-1)*10;
 	}
 	private int getRelativeResolution(int r){
 		return (int) (height/239F*r);
 	}
+	
 }
