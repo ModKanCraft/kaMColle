@@ -5,8 +5,8 @@ import im.kaMColle.config.KamcolleConfig;
 import im.kaMColle.handleEvent.PlayerWithKandouInWaterHandler;
 import im.kaMColle.init.KamcolleBlocks;
 import im.kaMColle.init.KamcolleItems;
-import im.kaMColle.network.KamcolleKansouChange;
 import im.kaMColle.network.MessageHandler;
+import im.kaMColle.network.packet.KamcolleKansouChange;
 import im.kaMColle.proxy.KamcolleClientProps;
 import im.kaMColle.proxy.KamcolleClientProxy;
 import im.kaMColle.proxy.KamcolleCommonProxy;
@@ -22,6 +22,7 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -29,14 +30,16 @@ import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.FMLEventChannel;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 @Mod(modid="kamcolle", name="kaMColle", version=Kamcolle.VERSION)
 public class Kamcolle {
 	public static final String VERSION = "0.0.2";
-	public static String ID="kamcolle";
-	public static Logger LOGGER = LogManager.getLogger(ID);	
+	public static final String ID="kamcolle";
+	public static final Logger LOGGER = LogManager.getLogger(ID);	
 	public static KamcolleConfig coreConfig;
+	//public static int message_Index=0;
 	
 	@SidedProxy(
             clientSide = "im.kaMColle.proxy.KamcolleClientProxy",
@@ -47,7 +50,6 @@ public class Kamcolle {
 	@Instance("kamcolle")
 	public static Kamcolle instance;
 	public static KamcolleCreativeTab TAB=new KamcolleCreativeTab("kanceaft");
-	
 	public static FleetSallyBoard blockSallyBoard=new FleetSallyBoard();
 	
 	
@@ -81,7 +83,8 @@ public class Kamcolle {
 		proxy.init();
 		MessageHandler.init();
 		MinecraftForge.EVENT_BUS.register(new PlayerWithKandouInWaterHandler());
-		MinecraftForge.EVENT_BUS.register(new KamcolleKansouChange());
+		FMLCommonHandler.instance().bus().register(new PlayerWithKandouInWaterHandler());
+		//MinecraftForge.EVENT_BUS.register(new KamcolleKansouChange());
 	    //GameRegistry.addRecipe(new ItemStack(sth, 1), new Object[]{"XYX",Character.valueOf('X'),s,Character.valueOf('Y'),th});
 	}
 	 

@@ -10,14 +10,14 @@ import net.minecraft.util.StatCollector;
 
 
 public enum FleetClass {
-	//SS("SSKansou"),
+	SS(),
 	DD(KansouAttchments.DDTurret,KansouAttchments.TorpedoLauncher),
 	CL(/*KansouAttchments.CLTurret,*/KansouAttchments.TorpedoLauncher),
 	CA(KansouAttchments.CATurret,KansouAttchments.TorpedoLauncher),
 	CV(KansouAttchments.CVLaunchPad),
 	BB(KansouAttchments.BBTurret),
 	AV,
-	//SSV("SSKansou"),
+	SSV(KansouAttchments.SSVLauncher),
 	//CAV("CATurret","TorpedoLauncher","CAVLaunchPad"),
 	BBV(KansouAttchments.BBTurret,KansouAttchments.BBVLaunchPad),
 	CLT(KansouAttchments.CLTurret,KansouAttchments.TorpedoLauncher),

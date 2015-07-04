@@ -1,16 +1,14 @@
 package im.kaMColle.proxy;
 
-import java.util.logging.Level;
-
-import cpw.mods.fml.client.registry.RenderingRegistry;
-import im.kaMColle.Kamcolle;
-import im.kaMColle.item.ItemSallyBoard;
 import im.kaMColle.render.OBJBlockRenderer;
-import im.kaMColle.render.OBJItemRenderer;
 import im.kaMColle.render.RenderPlayerKansou;
 import net.minecraft.client.Minecraft;
-import net.minecraftforge.client.MinecraftForgeClient;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
 public class KamcolleClientProxy extends KamcolleCommonProxy{
 
@@ -42,5 +40,13 @@ public class KamcolleClientProxy extends KamcolleCommonProxy{
 	}
 	void test(){
 		
+	}
+
+	@SideOnly(Side.CLIENT)
+	public EntityPlayer getPlayer(String name){
+		return Minecraft.getMinecraft().theWorld.getPlayerEntityByName(name);
+	}
+	public void displayGUI(GuiScreen gui){
+		Minecraft.getMinecraft().displayGuiScreen(gui);
 	}
 }

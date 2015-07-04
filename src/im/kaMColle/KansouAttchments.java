@@ -24,6 +24,7 @@ public enum KansouAttchments {
 			Point.get(-20d,-10d,-10d)
 			//四个炮塔的位置
 	), 
+	SSVLauncher("",0.1d,Point.get(0d, 0d, 0d)),
 	//只用设置一条腿的偏移，以右腿为参照做右腿的，左腿会自行对称过去
 	TorpedoLauncher("leg",0.08d,Point.get(2d,-4d,0d)),
 	//飞行甲板只有一个

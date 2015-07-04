@@ -26,6 +26,7 @@ public class KamcolleOBJModelResourceManager {
 	private IModelCustom modelTorpedoLauncher;
 	private IModelCustom modelTest;
 	private IModelCustom modelBBTurret;
+	private IModelCustom modelSSVLauncher;
 
 	
 	private KamcolleOBJModelResourceManager(){
@@ -36,6 +37,7 @@ public class KamcolleOBJModelResourceManager {
 		//modelCATurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CATurret.obj"));
 		//modelCLTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CLTurret.obj"));
 		//modelDDTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/DDTurret.obj"));
+		modelSSVLauncher=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/I401/I-401_1.obj"));
 		//...
 		modelTestTexture=new ResourceLocation(Kamcolle.ID,"textures/checkboard.tga");
 		modelBBTurretTexture=new ResourceLocation(Kamcolle.ID,"textures/models/BBturret.png");
@@ -43,6 +45,7 @@ public class KamcolleOBJModelResourceManager {
 		modelsMap.put(KansouAttchments.Test, new Models(modelTest));
 		modelsMap.put(KansouAttchments.TorpedoLauncher, new Models(modelTorpedoLauncher));
 		modelsMap.put(KansouAttchments.BBTurret, new Models(modelBBTurret,modelBBTurretTexture));
+		modelsMap.put(KansouAttchments.SSVLauncher, new Models(modelSSVLauncher));
 		//...
 		//弄好一个加一个
 	}

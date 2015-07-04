@@ -1,14 +1,21 @@
 package im.kaMColle.handleEvent;
 
+
+
 import im.kaMColle.FleetClass;
 import im.kaMColle.Kamcolle;
+import im.kaMColle.network.MessageHandler;
+import im.kaMColle.network.packet.KansouControlMessage;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
 
 public class PlayerWithKandouInWaterHandler {
@@ -17,8 +24,14 @@ public class PlayerWithKandouInWaterHandler {
 		if(event.entity instanceof EntityPlayer){
 			EntityPlayer player=(EntityPlayer) event.entity;
 			if(player.worldObj.isAABBInMaterial(player.boundingBox, Material.water)){
-				
-				if(!(player.getEntityData().getString("FleetClass").isEmpty()||player.getEntityData().getString("FleetClass").equals("NULL")))floatPlayerOnWater(player);
+				String className=player.getEntityData().getString("FleetClass");
+				if(!(className.isEmpty()||className.equals("NULL"))){
+					if(className.equals("SS")||className.equals("SSV")){
+						priventPlayerSinkInWater(player);
+					}else{
+						floatPlayerOnWater(player);
+					}
+				}
 			}
 		}
 	}
@@ -42,8 +55,26 @@ public class PlayerWithKandouInWaterHandler {
 			}
 		}
 	}
-	@SubscribeEvent
-	public void syncFleetClassOnPlayerConstruct(PlayerEvent.PlayerLoggedInEvent e){
-		
+	public void priventPlayerSinkInWater(EntityPlayer player){
+		player.motionY+=0.1D;
+		byte b=player.getDataWatcher().getWatchableObjectByte(25);
+		if(b>0)player.motionY+=0.1D*b;
+		else if(b<0)player.motionY-=0.1D*b;
 	}
+	/*
+		@SubscribeEvent
+	public void listenKeyJumpAndSneak(KeyInputEvent e){
+		EntityPlayer me=Minecraft.getMinecraft().thePlayer;
+		byte t=0;
+		while(Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()){
+			t+=1;
+			if(t%20==19)MessageHandler.INSTANCE.sendToServer(new KansouControlMessage(Minecraft.getMinecraft().thePlayer,t));
+			Kamcolle.LogInfo(t);
+		}
+		while(Minecraft.getMinecraft().gameSettings.keyBindSneak.isPressed()){
+			t+=1;
+			if(t%20==19)MessageHandler.INSTANCE.sendToServer(new KansouControlMessage(Minecraft.getMinecraft().thePlayer,(byte) -t));
+		}
+	}
+*/
 }
