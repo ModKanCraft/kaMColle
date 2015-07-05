@@ -2,7 +2,7 @@ package im.kaMColle.proxy;
 
 import im.kaMColle.handleEvent.KeyboardInputHandler;
 import im.kaMColle.handleEvent.PlayerWithKandouInWaterHandler;
-import im.kaMColle.network.packet.KansouSyncPacket;
+import im.kaMColle.network.packet.KansouSync;
 import im.kaMColle.render.OBJBlockRenderer;
 import im.kaMColle.render.RenderPlayerKansou;
 import net.minecraft.client.Minecraft;
@@ -37,7 +37,6 @@ public class KamcolleClientProxy extends KamcolleCommonProxy{
 		// TODO Auto-generated method stub
 		RenderingRegistry.registerBlockHandler(new OBJBlockRenderer());
 		MinecraftForge.EVENT_BUS.register(new RenderPlayerKansou());
-		MinecraftForge.EVENT_BUS.register(new KansouSyncPacket());
 	}
 
 	public void registerSound() {
