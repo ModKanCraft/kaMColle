@@ -10,6 +10,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.ReportedException;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -57,24 +58,15 @@ public class PlayerWithKandouInWaterHandler {
 	}
 	public void priventPlayerSinkInWater(EntityPlayer player){
 		player.motionY+=0.1D;
-		byte b=player.getDataWatcher().getWatchableObjectByte(25);
+		byte b;
+		try{
+			b=player.getDataWatcher().getWatchableObjectByte(25);
+		}catch(ReportedException e){
+			player.getDataWatcher().addObject(25, Byte.valueOf((byte) 0));
+			b=player.getDataWatcher().getWatchableObjectByte(25);
+		}
 		if(b>0)player.motionY+=0.1D*b;
 		else if(b<0)player.motionY-=0.1D*b;
 	}
-	/*
-		@SubscribeEvent
-	public void listenKeyJumpAndSneak(KeyInputEvent e){
-		EntityPlayer me=Minecraft.getMinecraft().thePlayer;
-		byte t=0;
-		while(Minecraft.getMinecraft().gameSettings.keyBindJump.isPressed()){
-			t+=1;
-			if(t%20==19)MessageHandler.INSTANCE.sendToServer(new KansouControlMessage(Minecraft.getMinecraft().thePlayer,t));
-			Kamcolle.LogInfo(t);
-		}
-		while(Minecraft.getMinecraft().gameSettings.keyBindSneak.isPressed()){
-			t+=1;
-			if(t%20==19)MessageHandler.INSTANCE.sendToServer(new KansouControlMessage(Minecraft.getMinecraft().thePlayer,(byte) -t));
-		}
-	}
-*/
+
 }

@@ -32,8 +32,8 @@ public class KamcolleOBJModelResourceManager {
 	private KamcolleOBJModelResourceManager(){
 		textureManager=Minecraft.getMinecraft().renderEngine;
 		modelTest=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/Test.obj"));
-		modelTorpedoLauncher=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/torpedo/launcher.obj"));
-		modelBBTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/turret/BBTurret.obj"));
+		modelTorpedoLauncher=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/fubuki/launcher.obj"));
+		modelBBTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/kongo/BBTurret.obj"));
 		//modelCATurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CATurret.obj"));
 		//modelCLTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CLTurret.obj"));
 		//modelDDTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/DDTurret.obj"));
@@ -43,9 +43,9 @@ public class KamcolleOBJModelResourceManager {
 		modelBBTurretTexture=new ResourceLocation(Kamcolle.ID,"textures/models/BBturret.png");
 		//...
 		modelsMap.put(KansouAttchments.Test, new Models(modelTest));
-		modelsMap.put(KansouAttchments.TorpedoLauncher, new Models(modelTorpedoLauncher));
+		modelsMap.put(KansouAttchments.TorpedoLauncher, new Models(modelTorpedoLauncher,modelTestTexture));
 		modelsMap.put(KansouAttchments.BBTurret, new Models(modelBBTurret,modelBBTurretTexture));
-		modelsMap.put(KansouAttchments.SSVLauncher, new Models(modelSSVLauncher));
+		modelsMap.put(KansouAttchments.SSVLauncher, new Models(modelSSVLauncher,modelTestTexture));
 		//...
 		//弄好一个加一个
 	}

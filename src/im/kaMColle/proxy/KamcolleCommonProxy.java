@@ -15,7 +15,7 @@ public class KamcolleCommonProxy {
  	public void init() {}
 
 	public void postInit(){}
-	@SideOnly(Side.SERVER)
+	
 	public EntityPlayer getPlayer(String name){
 		EntityPlayer player;
 		if(FMLCommonHandler.instance().getEffectiveSide()==Side.SERVER){

@@ -4,7 +4,7 @@ import im.kaMColle.FleetClass;
 import im.kaMColle.Kamcolle;
 import im.kaMColle.item.KamcolleFleetCard;
 import im.kaMColle.network.MessageHandler;
-import im.kaMColle.network.packet.KamcolleKansouChange;
+import im.kaMColle.network.packet.KansouChangePacket;
 
 import java.util.ArrayList;
 
@@ -14,13 +14,10 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class KansouChangeGUI extends GuiScreen {
 	
@@ -184,10 +181,10 @@ public class KansouChangeGUI extends GuiScreen {
 	
 	protected void actionPerformed(GuiButton button){
 		if(button.id==0){
-			MessageHandler.INSTANCE.sendToServer(KamcolleKansouChange.getKansouChangePacket((EntityPlayerMP) player, FleetClass.NULL));
+			MessageHandler.INSTANCE.sendToServer(new KansouChangePacket((EntityPlayer) player, FleetClass.NULL));
 			closeGUI();
 		}else if(button.id<=10){
-			MessageHandler.INSTANCE.sendToServer(KamcolleKansouChange.getKansouChangePacket((EntityPlayerMP) player, FleetClass.getClassByID(FleetCard.get(getCardIndex(button.id-1)).getItemDamage())));
+			MessageHandler.INSTANCE.sendToServer(new KansouChangePacket((EntityPlayer) player, FleetClass.getClassByID(FleetCard.get(getCardIndex(button.id-1)).getItemDamage())));
 			closeGUI();
 		}
 	}

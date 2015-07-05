@@ -3,11 +3,11 @@ package im.kaMColle.network.packet;
 import io.netty.buffer.ByteBuf;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 
-public class KamcolleCustomMessage implements IMessage {
-	boolean[] bools;
-	int[] ints;
-	byte[] bytes;
-	String[] strings;
+public abstract class KamcolleCustomMessage implements IMessage {
+	boolean[] bools=new boolean[0];
+	int[] ints=new int[0];
+	byte[] bytes=new byte[0];
+	String[] strings=new String[0];
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		// TODO Auto-generated method stub
@@ -54,5 +54,4 @@ public class KamcolleCustomMessage implements IMessage {
 			strings[i]=new String(bs);
 		}
 	}
-
 }

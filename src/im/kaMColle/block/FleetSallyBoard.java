@@ -1,10 +1,7 @@
 package im.kaMColle.block;
 
-import im.kaMColle.FleetClass;
 import im.kaMColle.Kamcolle;
 import im.kaMColle.GUI.KansouChangeGUI;
-import im.kaMColle.network.MessageHandler;
-import im.kaMColle.network.packet.KamcolleKansouChange;
 import im.kaMColle.tileEntity.SallyBoardTileEntity;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
@@ -12,16 +9,12 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -52,12 +45,11 @@ public class FleetSallyBoard extends BlockContainer {
 	 * 以后在这里加GUI
 	 */
 	@Override
+	@SideOnly(Side.CLIENT)
 	public void onEntityWalking(World world, int x, int y, int z, Entity entity){
 		Kamcolle.LogInfo(entity);
-		if(FMLCommonHandler.instance().getEffectiveSide()==Side.SERVER){
-			if(entity instanceof EntityPlayer){
-				MessageHandler.INSTANCE.sendTo(KamcolleKansouChange.getGUIDisplayPacket((EntityPlayerMP) entity), (EntityPlayerMP) entity);;
-			}
+		if(entity.equals(Minecraft.getMinecraft().thePlayer)){
+			Kamcolle.proxy.displayGUI(new KansouChangeGUI((EntityPlayer) entity));
 		}
 	}
 	@SideOnly(Side.CLIENT)
