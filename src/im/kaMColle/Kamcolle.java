@@ -76,7 +76,6 @@ public class Kamcolle {
 		proxy.init();
 		MessageHandler.init();
 		MinecraftForge.EVENT_BUS.register(new PlayerWithKandouInWaterHandler());
-		MinecraftForge.EVENT_BUS.register(new KansouSync());
 		//MinecraftForge.EVENT_BUS.register(new KamcolleKansouChange());
 	    //GameRegistry.addRecipe(new ItemStack(sth, 1), new Object[]{"XYX",Character.valueOf('X'),s,Character.valueOf('Y'),th});
 	}

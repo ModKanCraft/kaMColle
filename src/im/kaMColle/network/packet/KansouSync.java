@@ -2,6 +2,7 @@ package im.kaMColle.network.packet;
 
 import im.kaMColle.Kamcolle;
 import im.kaMColle.network.MessageHandler;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -12,15 +13,27 @@ import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-public class KansouSync{
+public class KansouSync extends PlayerMsg implements IMessageHandler<KansouSync, KansouSyncReplyPacket>{
+	public KansouSync(EntityPlayer p) {
+		super(p);
+	}
+
+	public KansouSync() {
+		super();
+	}
+
 	@SubscribeEvent
+	@SideOnly(Side.CLIENT)
 	public void catchEntityJoinWorld(EntityJoinWorldEvent e){
 		Kamcolle.LogInfo(e.entity);
-		if(e.entity instanceof EntityPlayer&&!e.entity.worldObj.isRemote){
+		if(e.entity instanceof EntityPlayer){
 			EntityPlayer p=(EntityPlayer) e.entity;
-			for(Object o:p.worldObj.playerEntities){
-				MessageHandler.INSTANCE.sendTo(new KansouSyncReplyPacket(p), (EntityPlayerMP)p);
-			}
+			MessageHandler.INSTANCE.sendToServer(new KansouSync(p));
 		}
+	}
+
+	@Override
+	public KansouSyncReplyPacket onMessage(KansouSync message, MessageContext ctx) {
+		return new KansouSyncReplyPacket(message.player);
 	}
 }

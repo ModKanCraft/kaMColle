@@ -26,6 +26,7 @@ public class KamcolleClientProxy extends KamcolleCommonProxy{
 		registerRenderThings();
 		registerSound();
 		FMLCommonHandler.instance().bus().register(new KeyboardInputHandler());
+		MinecraftForge.EVENT_BUS.register(new KansouSync());
 	}
 
 	public void postInit() {

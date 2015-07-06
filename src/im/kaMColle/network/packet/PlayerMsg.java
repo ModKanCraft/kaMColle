@@ -16,7 +16,7 @@ public abstract class PlayerMsg extends KamcolleCustomMessage {
 		this.strings[0]=this.player.getDisplayName();
 		super.toBytes(buf);
 	}
-	public void fromByte(ByteBuf buf){
+	public void fromBytes(ByteBuf buf){
 		super.fromBytes(buf);
 		this.player=Kamcolle.proxy.getPlayer(this.strings[0]);
 	}

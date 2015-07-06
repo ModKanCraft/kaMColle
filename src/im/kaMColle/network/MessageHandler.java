@@ -16,6 +16,7 @@ public class MessageHandler {
 	public static void init() {
 		int idx = 0;
 		INSTANCE.registerMessage(KansouChangePacket.class, KansouChangePacket.class, idx++, Side.SERVER);
+		INSTANCE.registerMessage(KansouSync.class, KansouSync.class, idx++, Side.SERVER);
 		INSTANCE.registerMessage(KansouSyncReplyPacket.class, KansouSyncReplyPacket.class, idx++, Side.CLIENT);
 		INSTANCE.registerMessage(KansouControlMessage.class, KansouControlMessage.class, idx++, Side.SERVER);
 	}

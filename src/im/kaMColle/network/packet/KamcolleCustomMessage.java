@@ -1,5 +1,6 @@
 package im.kaMColle.network.packet;
 
+import im.kaMColle.Kamcolle;
 import io.netty.buffer.ByteBuf;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 
@@ -51,7 +52,6 @@ public abstract class KamcolleCustomMessage implements IMessage {
 			byte[] bs=strings[i].getBytes();
 			buf.writeByte(bs.length);
 			buf.writeBytes(bs);
-			strings[i]=new String(bs);
 		}
 	}
 }

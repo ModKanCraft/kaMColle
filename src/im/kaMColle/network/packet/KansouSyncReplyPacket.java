@@ -18,6 +18,5 @@ public class KansouSyncReplyPacket extends PlayerAndFleetClassMsg implements IMe
 		message.player.getEntityData().setString("FleetClass", message.fleetClass.name());
 		return null;
 	}
-
 }
 

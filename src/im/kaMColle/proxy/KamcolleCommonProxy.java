@@ -18,11 +18,9 @@ public class KamcolleCommonProxy {
 	
 	public EntityPlayer getPlayer(String name){
 		EntityPlayer player;
-		if(FMLCommonHandler.instance().getEffectiveSide()==Side.SERVER){
-			for(WorldServer w:MinecraftServer.getServer().worldServers){
-				if((player=w.getPlayerEntityByName(name))!=null){
-					return player;
-				}
+		for(WorldServer w:MinecraftServer.getServer().worldServers){
+			if((player=w.getPlayerEntityByName(name))!=null){
+				return player;
 			}
 		}
 		return null;

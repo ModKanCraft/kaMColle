@@ -61,7 +61,7 @@ public class PlayerWithKandouInWaterHandler {
 		byte b;
 		try{
 			b=player.getDataWatcher().getWatchableObjectByte(25);
-		}catch(ReportedException e){
+		}catch(Exception e){
 			player.getDataWatcher().addObject(25, Byte.valueOf((byte) 0));
 			b=player.getDataWatcher().getWatchableObjectByte(25);
 		}
