@@ -5,6 +5,7 @@ import im.kaMColle.Kamcolle;
 import im.kaMColle.item.KamcolleFleetCard;
 import im.kaMColle.network.MessageHandler;
 import im.kaMColle.network.packet.KansouChangePacket;
+import im.kaMColle.tileEntity.SallyBoardTileEntity;
 
 import java.util.ArrayList;
 
@@ -24,6 +25,7 @@ public class KansouChangeGUI extends GuiScreen {
 	
 	private ResourceLocation texture = new ResourceLocation(Kamcolle.ID, "textures/gui/KansouChangeGUI.png");
 	private EntityPlayer player;
+	private SallyBoardTileEntity blockTile;
 	private ArrayList<ItemStack> FleetCard=new ArrayList<ItemStack>();
 	private int page=1;
 	private int maxPage;
@@ -113,8 +115,9 @@ public class KansouChangeGUI extends GuiScreen {
 		}
 	}
 
-	public KansouChangeGUI(EntityPlayer p){
+	public KansouChangeGUI(EntityPlayer p,SallyBoardTileEntity t){
 		this.player=p;
+		this.blockTile=t;
 	}
 	
 	@Override
@@ -190,9 +193,20 @@ public class KansouChangeGUI extends GuiScreen {
 	}
 	private void closeGUI(){
 		//实现关闭动画
+		this.mc.displayGuiScreen((GuiScreen)null);
+		this.mc.setIngameFocus();
 		this.player.closeScreen();
 	}
-	
+	@Override
+	public void keyTyped(char key,int id){
+		if(id==1){
+			this.closeGUI();
+		}
+	}
+	@Override
+	public void onGuiClosed(){
+		this.blockTile.isOccupied=false;
+	}
 	private int getCardIndex(int i){
 		return i+(this.page-1)*10;
 	}

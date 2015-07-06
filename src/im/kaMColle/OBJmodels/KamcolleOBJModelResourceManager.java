@@ -28,6 +28,8 @@ public class KamcolleOBJModelResourceManager {
 	private IModelCustom modelBBTurret;
 	private IModelCustom modelSSVLauncher;
 
+	private IModelCustom modelSallyBoard;
+
 	
 	private KamcolleOBJModelResourceManager(){
 		textureManager=Minecraft.getMinecraft().renderEngine;
@@ -38,14 +40,17 @@ public class KamcolleOBJModelResourceManager {
 		//modelCLTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CLTurret.obj"));
 		//modelDDTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/DDTurret.obj"));
 		modelSSVLauncher=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/I401/I-401_1.obj"));
+		
+		modelSallyBoard=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/start_block/start_block.obj"));
 		//...
-		modelTestTexture=new ResourceLocation(Kamcolle.ID,"textures/checkboard.tga");
+		modelTestTexture=new ResourceLocation(Kamcolle.ID,"textures/checkerboard.tga");
 		modelBBTurretTexture=new ResourceLocation(Kamcolle.ID,"textures/models/BBturret.png");
 		//...
 		modelsMap.put(KansouAttchments.Test, new Models(modelTest));
 		modelsMap.put(KansouAttchments.TorpedoLauncher, new Models(modelTorpedoLauncher,modelTestTexture));
 		modelsMap.put(KansouAttchments.BBTurret, new Models(modelBBTurret,modelBBTurretTexture));
 		modelsMap.put(KansouAttchments.SSVLauncher, new Models(modelSSVLauncher,modelTestTexture));
+		
 		//...
 		//弄好一个加一个
 	}
@@ -87,7 +92,7 @@ public class KamcolleOBJModelResourceManager {
 		GL11.glPopMatrix();
 	}
 	public void renderModelSallyBoard(){
-		
+		modelSallyBoard.renderPart("blockbase");
 	}
 	private Models getModel(KansouAttchments type){
 		if(modelsMap.containsKey(type))

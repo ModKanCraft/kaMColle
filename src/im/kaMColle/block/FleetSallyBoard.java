@@ -48,8 +48,10 @@ public class FleetSallyBoard extends BlockContainer {
 	@SideOnly(Side.CLIENT)
 	public void onEntityWalking(World world, int x, int y, int z, Entity entity){
 		Kamcolle.LogInfo(entity);
-		if(entity.equals(Minecraft.getMinecraft().thePlayer)){
-			Kamcolle.proxy.displayGUI(new KansouChangeGUI((EntityPlayer) entity));
+		SallyBoardTileEntity t=(SallyBoardTileEntity) world.getTileEntity(x, y, z);
+		if(entity.equals(Minecraft.getMinecraft().thePlayer)&&!t.isOccupied){
+			t.isOccupied=true;
+			Kamcolle.proxy.displayGUI(new KansouChangeGUI((EntityPlayer) entity,t));
 		}
 	}
 	@SideOnly(Side.CLIENT)
