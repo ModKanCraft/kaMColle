@@ -29,7 +29,12 @@ public class KansouChangeGUI extends GuiScreen {
 	private ArrayList<ItemStack> FleetCard=new ArrayList<ItemStack>();
 	private int page=1;
 	private int maxPage;
-	
+	int guiX=0;
+	int guiY=0;
+	int RX=0;
+	boolean isOpening=true;
+	boolean isClosing=false;
+	boolean shouldClosed=false;
 	
 	public class KamcolleButton extends GuiButton{
 		private int style=1;
@@ -127,9 +132,10 @@ public class KansouChangeGUI extends GuiScreen {
 	public void initGui()
     {
 		this.buttonList.clear();
+		guiX=width;
         //每当界面被打开时调用
         //这里部署控件
-		int x=width-getRelativeResolution(258);
+		int x=this.guiX+getRelativeResolution(24);
 		int y=getRelativeResolution(18);
 		int w=getRelativeResolution(240);
 		int h=getRelativeResolution(18);
@@ -155,10 +161,36 @@ public class KansouChangeGUI extends GuiScreen {
 	public void drawScreen(int par1, int par2, float par3)
     {
         //在这里绘制文本或纹理等非控件内容,这里绘制的东西会被控件(即按键)盖住.
+		int Dx=getRelativeResolution((int) (60*par3));
+		if(this.isOpening){
+			this.guiX-=Dx;
+			for(Object o:this.buttonList){
+				((GuiButton)o).xPosition-=Dx;
+			}
+			if(this.guiX<=this.width-getRelativeResolution(248)){
+				this.isOpening=false;
+				int i=guiX-this.width+getRelativeResolution(248);
+				this.guiX-=i;
+				for(Object o:this.buttonList){
+					((GuiButton)o).xPosition-=i;
+				}
+			}
+		}
+		if(this.isClosing){
+			this.guiX+=Dx;
+			for(Object o:this.buttonList){
+				((GuiButton)o).xPosition+=Dx;
+			}
+			if(this.guiX>=this.width)this.shouldClosed=true;
+		}
+		if(this.shouldClosed==true){
+			this.close();
+			return;
+		}
 		KamcolleButton kbtn;
 		ItemStack item;
         mc.renderEngine.bindTexture(texture);
-        func_152125_a(width-getRelativeResolution(284), 0, 0, 0, 284, 239, getRelativeResolution(284), height, 284, 239);//参数分别为x,y,u,v,u宽度,v高度(即纹理中欲绘制区域的宽高),实际宽,实际高,纹理总宽,纹理总高.
+        func_152125_a(this.guiX, this.guiY, 0, 0, 284, 239, getRelativeResolution(284), height, 284, 239);//参数分别为x,y,u,v,u宽度,v高度(即纹理中欲绘制区域的宽高),实际宽,实际高,纹理总宽,纹理总高.
         for(int i=1;i<=10;i++){
     		String s;
         	kbtn=(KamcolleButton)this.buttonList.get(i);
@@ -192,6 +224,9 @@ public class KansouChangeGUI extends GuiScreen {
 		}
 	}
 	private void closeGUI(){
+		this.isClosing=true;
+	}
+	private void close(){
 		//实现关闭动画
 		this.mc.displayGuiScreen((GuiScreen)null);
 		this.mc.setIngameFocus();
