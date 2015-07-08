@@ -42,8 +42,8 @@ public class PlayerWithKandouInWaterHandler {
 		for (int i = 0; i < i0; ++i){
 			double d1 = player.boundingBox.minY + (player.boundingBox.maxY - player.boundingBox.minY) * (double)(i + 0) / (double)i0;
 			double d3 = player.boundingBox.minY + (player.boundingBox.maxY - player.boundingBox.minY) * (double)(i + 1) / (double)i0;
-			AxisAlignedBB axisalignedbb = AxisAlignedBB.getBoundingBox(player.boundingBox.minX, d1, player.boundingBox.minZ, player.boundingBox.maxX, d3, player.boundingBox.maxZ);
-			if (player.worldObj.isAABBInMaterial(axisalignedbb, Material.water)){
+			AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(player.boundingBox.minX, d1, player.boundingBox.minZ, player.boundingBox.maxX, d3, player.boundingBox.maxZ);
+			if (player.worldObj.isAABBInMaterial(aabb, Material.water)){
 				i1 +=1;
 			}
 		}

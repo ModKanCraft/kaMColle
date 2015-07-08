@@ -1,6 +1,7 @@
 package im.kaMColle.render.tileEntity;
 
 import im.kaMColle.OBJmodels.KamcolleOBJModelResourceManager;
+import im.kaMColle.tileEntity.SallyBoardTileEntity;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
 
@@ -13,8 +14,8 @@ public class SallyBoardSpecialRenderer extends TileEntitySpecialRenderer {
 			double y, double z, float Scale) {
 		// TODO Auto-generated method stub
 		GL11.glPushMatrix();
-		GL11.glTranslated(x,y,z);
-		KamcolleOBJModelResourceManager.getManager().renderModelSallyBoard();
+		GL11.glTranslated(x+0.5D,y,z+0.5D);
+		KamcolleOBJModelResourceManager.getManager().renderModelSallyBoard((SallyBoardTileEntity) tileEntity);
 		GL11.glPopMatrix();
 	}
 }

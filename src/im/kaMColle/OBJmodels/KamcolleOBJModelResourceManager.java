@@ -3,6 +3,7 @@ package im.kaMColle.OBJmodels;
 import im.kaMColle.FleetClass;
 import im.kaMColle.Kamcolle;
 import im.kaMColle.KansouAttchments;
+import im.kaMColle.tileEntity.SallyBoardTileEntity;
 
 import java.util.HashMap;
 
@@ -91,8 +92,14 @@ public class KamcolleOBJModelResourceManager {
 		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glPopMatrix();
 	}
-	public void renderModelSallyBoard(){
+	public void renderModelSallyBoard(SallyBoardTileEntity t){
+		GL11.glPushMatrix();
+		textureManager.bindTexture(this.modelTestTexture);
+		GL11.glScaled(1/18D, 1/18D, 1/18D);
 		modelSallyBoard.renderPart("blockbase");
+		if(t.isOccupied)GL11.glTranslatef(0, -1.8F, 0);
+		modelSallyBoard.renderPart("button");
+		GL11.glPopMatrix();
 	}
 	private Models getModel(KansouAttchments type){
 		if(modelsMap.containsKey(type))

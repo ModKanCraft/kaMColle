@@ -45,12 +45,13 @@ public class FleetSallyBoard extends BlockContainer {
 	 * 以后在这里加GUI
 	 */
 	@Override
-	@SideOnly(Side.CLIENT)
 	public void onEntityWalking(World world, int x, int y, int z, Entity entity){
 		Kamcolle.LogInfo(entity);
 		SallyBoardTileEntity t=(SallyBoardTileEntity) world.getTileEntity(x, y, z);
-		if(entity.equals(Minecraft.getMinecraft().thePlayer)&&!t.isOccupied){
+		if(entity instanceof EntityPlayer){
 			t.isOccupied=true;
+		}
+		if(entity.worldObj.isRemote&&entity.equals(Minecraft.getMinecraft().thePlayer)&&!t.isOccupied){
 			Kamcolle.proxy.displayGUI(new KansouChangeGUI((EntityPlayer) entity,t));
 		}
 	}
