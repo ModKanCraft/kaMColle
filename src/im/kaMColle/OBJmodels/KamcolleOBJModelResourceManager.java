@@ -43,7 +43,7 @@ public class KamcolleOBJModelResourceManager {
 		
 		modelSallyBoard=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/start_block/start_block.obj"));
 		//...
-		modelTestTexture=new ResourceLocation(Kamcolle.ID,"textures/checkerboard.tga");
+		modelTestTexture=new ResourceLocation(Kamcolle.ID,"textures/checkerboard.png");
 		modelBBTurretTexture=new ResourceLocation(Kamcolle.ID,"textures/models/BBturret.png");
 		//...
 		modelsMap.put(KansouAttchments.Test, new Models(modelTest));

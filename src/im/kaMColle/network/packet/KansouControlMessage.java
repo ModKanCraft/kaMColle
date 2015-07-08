@@ -27,10 +27,6 @@ public class KansouControlMessage extends PlayerMsg implements IMessageHandler<K
 		super.fromBytes(buf);
 		this.flow=this.bytes[0];
 	}
-	public byte getID() {
-		// TODO Auto-generated method stub
-		return 3;
-	}
 	@Override
 	public IMessage onMessage(KansouControlMessage message, MessageContext ctx) {
 		// TODO Auto-generated method stub
