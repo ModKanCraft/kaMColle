@@ -1,5 +1,6 @@
 package im.kaMColle.proxy;
 
+import im.kaMColle.ForTest;
 import im.kaMColle.handleEvent.PlayerWithKandouInWaterHandler;
 import im.kaMColle.network.MessageHandler;
 import im.kaMColle.network.packet.KansouSyncPacket;
@@ -9,10 +10,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 public class KamcolleCommonProxy {
 
@@ -24,6 +22,7 @@ public class KamcolleCommonProxy {
 		MessageHandler.init();
 		MinecraftForge.EVENT_BUS.register(new PlayerWithKandouInWaterHandler());
 		MinecraftForge.EVENT_BUS.register(new KansouSyncPacket());
+		MinecraftForge.EVENT_BUS.register(new ForTest());
  	}
 
 	public void postInit(){}

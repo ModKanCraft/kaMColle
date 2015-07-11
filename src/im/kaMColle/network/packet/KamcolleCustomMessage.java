@@ -1,55 +1,57 @@
 package im.kaMColle.network.packet;
 
-import im.kaMColle.Kamcolle;
 import io.netty.buffer.ByteBuf;
+
+import java.util.ArrayList;
+
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 
 public abstract class KamcolleCustomMessage implements IMessage {
-	boolean[] bools=new boolean[0];
-	int[] ints=new int[0];
-	byte[] bytes=new byte[0];
-	String[] strings=new String[0];
+	ArrayList<Boolean> bools=new ArrayList<Boolean>();
+	ArrayList<Integer> ints=new ArrayList<Integer>();
+	ArrayList<Byte> bytes=new ArrayList<Byte>();
+	ArrayList<String> strings=new ArrayList<String>();
 	@Override
 	public void fromBytes(ByteBuf buf) {
 		// TODO Auto-generated method stub
-		bools=new boolean[buf.readByte()];
-		ints=new int[buf.readByte()];
-		bytes=new byte[buf.readByte()];
-		strings=new String[buf.readByte()];
-		for(int i=0;i<bools.length;i++){
-			bools[i]=buf.readBoolean();
+		int boolsL=buf.readByte();
+		int intsL=buf.readByte();
+		int bytesL=buf.readByte();
+		int stringsL=buf.readByte();
+		for(int i=0;i<boolsL;i++){
+			bools.add(i,buf.readBoolean());
 		}
-		for(int i=0;i<ints.length;i++){
-			ints[i]=buf.readInt();
+		for(int i=0;i<intsL;i++){
+			ints.add(i,buf.readInt());
 		}
-		for(int i=0;i<bytes.length;i++){
-			bytes[i]=buf.readByte();
+		for(int i=0;i<bytesL;i++){
+			bytes.add(i,buf.readByte());
 		}
-		for(int i=0;i<strings.length;i++){
+		for(int i=0;i<stringsL;i++){
 			byte length=buf.readByte();
 			byte[] bs=new byte[length];	
-			strings[i]=new String(buf.readBytes(length).array());
+			strings.add(i, new String(buf.readBytes(length).array()));
 		}
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
 		// TODO Auto-generated method stub
-		buf.writeByte(bools.length);
-		buf.writeByte(ints.length);
-		buf.writeByte(bytes.length);
-		buf.writeByte(strings.length);
-		for(int i=0;i<bools.length;i++){
-			buf.writeBoolean(bools[i]);
+		buf.writeByte(bools.size());
+		buf.writeByte(ints.size());
+		buf.writeByte(bytes.size());
+		buf.writeByte(strings.size());
+		for(int i=0;i<bools.size();i++){
+			buf.writeBoolean(bools.get(i));
 		}
-		for(int i=0;i<ints.length;i++){
-			buf.writeInt(ints[i]);
+		for(int i=0;i<ints.size();i++){
+			buf.writeInt(ints.get(i));
 		}
-		for(int i=0;i<bytes.length;i++){
-			buf.writeByte(bytes[i]);
+		for(int i=0;i<bytes.size();i++){
+			buf.writeByte(bytes.get(i));
 		}
-		for(int i=0;i<strings.length;i++){
-			byte[] bs=strings[i].getBytes();
+		for(int i=0;i<strings.size();i++){
+			byte[] bs=strings.get(i).getBytes();
 			buf.writeByte(bs.length);
 			buf.writeBytes(bs);
 		}

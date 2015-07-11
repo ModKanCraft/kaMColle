@@ -50,7 +50,10 @@ public class KamcolleClientProxy extends KamcolleCommonProxy{
 	}
 
 	public EntityPlayer getPlayer(String name){
-		return Minecraft.getMinecraft().theWorld.getPlayerEntityByName(name);
+		if(FMLCommonHandler.instance().getEffectiveSide()==Side.CLIENT)
+			return Minecraft.getMinecraft().theWorld.getPlayerEntityByName(name);
+		else
+			return super.getPlayer(name);
 	}
 	public void displayGUI(GuiScreen gui){
 		Minecraft.getMinecraft().displayGuiScreen(gui);

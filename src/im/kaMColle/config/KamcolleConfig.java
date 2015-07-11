@@ -31,9 +31,13 @@ public class KamcolleConfig {
 	public void load(){
 		this.config.load();
 	}
-	public String getGeneralProperties(String PropertyName, String DefaultValue)
+	public String getGeneralStringProperties(String PropertyName, String DefaultValue)
     {
         return this.config.get("general", PropertyName, DefaultValue).getString();
+    }
+	public int getGeneralIntegerProperties(String PropertyName, int DefaultValue)
+    {
+        return this.config.get("general", PropertyName, DefaultValue).getInt();
     }
 	public String toString(){
 		return config.toString();

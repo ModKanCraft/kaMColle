@@ -60,7 +60,7 @@ public class Kamcolle {
 	public void preLoad(FMLPreInitializationEvent event)
 	{
 	    LOGGER.info("Starting kaMColle " + Kamcolle.VERSION);
-	    coreConfig=new KamcolleConfig(new File("config/Kamcolle.config"));
+	    coreConfig=new KamcolleConfig(new File("config/Kamcolle.cfg"));
 	    KamcolleClientProps.init();
 	    KamcolleItems.init();
 	    KamcolleBlocks.init();

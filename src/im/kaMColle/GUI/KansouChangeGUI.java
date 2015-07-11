@@ -5,6 +5,7 @@ import im.kaMColle.Kamcolle;
 import im.kaMColle.item.KamcolleFleetCard;
 import im.kaMColle.network.MessageHandler;
 import im.kaMColle.network.packet.KansouChangePacket;
+import im.kaMColle.proxy.KamcolleClientProps;
 import im.kaMColle.tileEntity.SallyBoardTileEntity;
 
 import java.util.ArrayList;
@@ -15,7 +16,9 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
 
 import org.lwjgl.opengl.GL11;
@@ -26,24 +29,44 @@ public class KansouChangeGUI extends GuiScreen {
 	private ResourceLocation texture = new ResourceLocation(Kamcolle.ID, "textures/gui/KansouChangeGUI.png");
 	private EntityPlayer player;
 	private SallyBoardTileEntity blockTile;
-	private ArrayList<ItemStack> FleetCard=new ArrayList<ItemStack>();
+	private ArrayList<KansouCard> kansouCard=new ArrayList<KansouCard>();
 	private int page=1;
 	private int maxPage;
 	int guiX=0;
 	int guiY=0;
-	int RX=0;
+	int animeSpeed=KamcolleClientProps.ANIME_SPEED;
 	boolean isOpening=true;
 	boolean isClosing=false;
 	boolean shouldClosed=false;
+	public static class KansouCard{
+		ItemStack stack;
+		public KansouCard(ItemStack stack){
+			this.stack=stack;
+		}
+		public static ArrayList getFrom(ItemStack stack){
+			ArrayList<KansouCard> cards=new ArrayList<KansouChangeGUI.KansouCard>(stack.stackSize);
+			for(int i=0;i<stack.stackSize;i++){
+				Kamcolle.LogInfo(i);
+				cards.add(new KansouCard(stack));
+			}
+			return cards;
+		}
+	}
 	
 	public class KamcolleButton extends GuiButton{
 		private int style=1;
+		public int number=0;
 		private boolean displayText=true;
 		public KamcolleButton(int id,int x,int y,int w,int h,String s){
 			super(id, x, y, w, h, s);
 		}
 		public KamcolleButton(int id,int x,int y,int w,int h){
 			super(id, x, y, w, h,"");
+		}
+		public KamcolleButton(int id,int x,int y,int w,int h,int num){
+			super(id,x,y,w,h,String.valueOf(num));
+			this.number=num;
+			this.style=0;
 		}
 		public  KamcolleButton setDisplayText(String s){
 			if(s==null||s.equals("")){
@@ -54,8 +77,8 @@ public class KansouChangeGUI extends GuiScreen {
 			}
 			return this;
 		}
-		public  KamcolleButton setDisplayText(ItemStack item){
-				this.displayString=FleetClass.getClassLocalNameByID(item.getItemDamage())+" "+item.getDisplayName();
+		public  KamcolleButton setDisplayText(KansouCard card){
+				this.displayString=FleetClass.getClassLocalNameByID(card.stack.getItemDamage())+" "+card.stack.getDisplayName();
 				this.displayText=true;
 			return this;
 		}
@@ -82,8 +105,16 @@ public class KansouChangeGUI extends GuiScreen {
 			case 0:
 				GL11.glPushMatrix();
 				GL11.glEnable(GL11.GL_TEXTURE_2D);
+            	this.displayString=String.valueOf(number);
 	            if(k==2)color=0xFF7F27;
-	            if(this.displayText)fontrenderer.drawString(
+	            if(number>maxPage){
+	            	color=0xFFFFFF;
+	            }
+				else if(number==page){
+					color=0x1EBEC1;
+					this.displayString=String.format("%s%d",EnumChatFormatting.BOLD,number);
+				}
+				if(this.displayText)fontrenderer.drawString(
 	            		this.displayString,
 	            		this.xPosition + this.width/2,
 	            		this.yPosition + (this.height - 8) / 2,
@@ -140,28 +171,28 @@ public class KansouChangeGUI extends GuiScreen {
 		int w=getRelativeResolution(240);
 		int h=getRelativeResolution(18);
 		for(ItemStack item:this.player.inventory.mainInventory){
-			if(item!=null&&item.getItem() instanceof KamcolleFleetCard)this.FleetCard.add(item);
+			if(item!=null&&item.getItem() instanceof KamcolleFleetCard)this.kansouCard.addAll(KansouCard.getFrom(item));
 		}
-		this.maxPage=(int) Math.ceil(FleetCard.size()/10F);
-		this.buttonList.add(new KamcolleButton(0, x, y, w, getRelativeResolution(24)).setDisplayText("はずす"));
+		this.maxPage=(int) Math.ceil(kansouCard.size()/10F);
+		this.buttonList.add(new KamcolleButton(0, x, y, w, getRelativeResolution(24),"はずす"));
 		y+=getRelativeResolution(24);
 		for(int i=1;i<=10;i++){
-			this.buttonList.add(new KamcolleButton(i, x, y, w, h).setDisplayText(i+""));
+			this.buttonList.add(new KamcolleButton(i, x, y, w, h).setStyle(1));
 			y+=h;
 		}
 		y+=getRelativeResolution(4);
-		x=width-getRelativeResolution(142);
+		x=this.guiX+getRelativeResolution(142);
 		for(int i=1;i<=5;i++){
-			this.buttonList.add(new KamcolleButton(i+10, x+getRelativeResolution(i*20-60), y, getRelativeResolution(8), getRelativeResolution(8)).setStyle(0).setDisplayText(i+""));
+			this.buttonList.add(new KamcolleButton(i+10, x+getRelativeResolution(i*20-60), y, getRelativeResolution(8), getRelativeResolution(8),i));
 		}
     }
 	private int getCurrentButtonNum(){
-		return FleetCard.size()>=10?10:FleetCard.size()-(this.page-1)*10;
+		return kansouCard.size()>=10?10:kansouCard.size()-(this.page-1)*10;
 	}
 	public void drawScreen(int par1, int par2, float par3)
     {
         //在这里绘制文本或纹理等非控件内容,这里绘制的东西会被控件(即按键)盖住.
-		int Dx=getRelativeResolution((int) (60*par3));
+		int Dx=getRelativeResolution((int) (this.animeSpeed*par3));
 		if(this.isOpening){
 			this.guiX-=Dx;
 			for(Object o:this.buttonList){
@@ -188,14 +219,14 @@ public class KansouChangeGUI extends GuiScreen {
 			return;
 		}
 		KamcolleButton kbtn;
-		ItemStack item;
+		KansouCard item;
         mc.renderEngine.bindTexture(texture);
         func_152125_a(this.guiX, this.guiY, 0, 0, 284, 239, getRelativeResolution(284), height, 284, 239);//参数分别为x,y,u,v,u宽度,v高度(即纹理中欲绘制区域的宽高),实际宽,实际高,纹理总宽,纹理总高.
         for(int i=1;i<=10;i++){
     		String s;
         	kbtn=(KamcolleButton)this.buttonList.get(i);
         	try{
-            	item=FleetCard.get(getCardIndex(i-1));
+            	item=kansouCard.get(getCardIndex(i-1));
             	kbtn.setDisplayText(item);
         	}catch(IndexOutOfBoundsException e){
         		kbtn.enabled=false;
@@ -215,12 +246,38 @@ public class KansouChangeGUI extends GuiScreen {
     }
 	
 	protected void actionPerformed(GuiButton button){
-		if(button.id==0){
-			MessageHandler.INSTANCE.sendToServer(new KansouChangePacket((EntityPlayer) player, FleetClass.NULL));
+		KamcolleButton btn=(KamcolleButton) button;
+		if(btn.id==0){
+			MessageHandler.INSTANCE.sendToServer(new KansouChangePacket((EntityPlayer) player, FleetClass.NULL,this.blockTile));
 			closeGUI();
-		}else if(button.id<=10){
-			MessageHandler.INSTANCE.sendToServer(new KansouChangePacket((EntityPlayer) player, FleetClass.getClassByID(FleetCard.get(getCardIndex(button.id-1)).getItemDamage())));
+		}else if(btn.id<=10){
+			MessageHandler.INSTANCE.sendToServer(new KansouChangePacket((EntityPlayer) player,
+						FleetClass.getClassByID(kansouCard.get(getCardIndex(btn.id-1)).stack.getItemDamage()),
+						this.blockTile));
 			closeGUI();
+		}else if(btn.id<=15){
+			KamcolleButton[] kbtns=new KamcolleButton[5];
+			for(int i=1;i<=5;i++){
+				kbtns[i-1]=(KamcolleButton)this.buttonList.get(i+10);
+			}
+			if(btn.number<=maxPage){
+				this.page=btn.number;
+				if(page<3){
+					for(int i=0;i<5;i++){
+						kbtns[i].number=i+1;
+					}
+				}else if(maxPage-page<2){
+					for(int i=4;i>=0;i--){
+						kbtns[i].number=maxPage-4+i;
+					}
+				}else{
+					kbtns[2].number=page;
+					for(int i=1;i<=2;i++){
+						kbtns[2+i].number=page+i;
+						kbtns[2-i].number=page-i;
+					}
+				}
+			}
 		}
 	}
 	private void closeGUI(){

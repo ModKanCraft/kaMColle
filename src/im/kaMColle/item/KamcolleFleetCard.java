@@ -12,7 +12,6 @@ import net.minecraft.world.World;
 
 public class KamcolleFleetCard extends Item {
 	public KamcolleFleetCard(){
-		this.setMaxStackSize(1);
 		this.setNoRepair();
 		this.setCreativeTab(Kamcolle.TAB);
 		this.hasSubtypes=true;

@@ -15,17 +15,18 @@ public class KansouControlMessage extends PlayerMsg implements IMessageHandler<K
 		// TODO Auto-generated constructor stub
 		super(player);
 		this.flow=flow;
+		
+		this.bytes.add(this.flow);
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		// TODO Auto-generated method stub	
-		this.bytes=new byte[]{this.flow};
+		// TODO Auto-generated method stub
 		super.toBytes(buf);
 	}
 	public void fromBytes(ByteBuf buf){
 		super.fromBytes(buf);
-		this.flow=this.bytes[0];
+		this.flow=this.bytes.get(0);
 	}
 	@Override
 	public IMessage onMessage(KansouControlMessage message, MessageContext ctx) {
