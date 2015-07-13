@@ -32,7 +32,8 @@ public enum KansouAttchments {
 	CVLaunchPad("",0.1d),//这个没想好
 	CLTurret("right arm",0.1d,Point.get(0d,0d,0d),Point.get(0d,0d,0d)),
 	DDTurret("right arm",0.1d,Point.get(0d,0d,0d)),
-	CATurret("right arm",0.1d,Point.get(0d,0d,0d),Point.get(0d,0d,0d));
+	CATurret("right arm",0.1d,Point.get(0d,0d,0d),Point.get(0d,0d,0d)), 
+	DDBridge("",0.25d,Point.get(0d, -10d,-5d));
 	public String part;
 	public double scale;
 	public Point[] offsets;

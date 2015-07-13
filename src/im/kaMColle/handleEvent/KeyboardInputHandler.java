@@ -9,15 +9,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 
+@SideOnly(Side.CLIENT)
 public class KeyboardInputHandler {
 	byte t=0;
 	static final byte MAX_V=10;
-	EntityPlayer me=Minecraft.getMinecraft().thePlayer;
-	World mw=Minecraft.getMinecraft().theWorld;
 	@SubscribeEvent
 	public void listenKeyJumpAndSneak(KeyInputEvent e){
-		if(mw.isAABBInMaterial(me.boundingBox, Material.water)){
+		EntityPlayer me=Minecraft.getMinecraft().thePlayer;
+		if(me.worldObj.isAABBInMaterial(me.boundingBox, Material.water)){
 			if(Minecraft.getMinecraft().gameSettings.keyBindJump.getIsKeyPressed()){
 				addFlow(1);
 			}
