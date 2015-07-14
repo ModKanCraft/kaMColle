@@ -54,7 +54,7 @@ public enum FleetClass {
 		return -1;
 	}
 	public static String getClassLocalName(FleetClass f){
-		String s="FleetClass."+f.name();
+		String s="FleetClass."+f.name()+".name";
 		if(StatCollector.canTranslate(s))return StatCollector.translateToLocal(s);
 		return s;
 	}

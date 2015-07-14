@@ -3,6 +3,7 @@ package im.kaMColle.render;
 import im.kaMColle.FleetClass;
 import im.kaMColle.Kamcolle;
 import im.kaMColle.KansouAttchments;
+import im.kaMColle.ModelAttachPoint;
 import im.kaMColle.OBJmodels.KamcolleOBJModelResourceManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBiped;
@@ -44,7 +45,7 @@ public class RenderPlayerKansou {
 		for(KansouAttchments att:Class.Kansou){
 			if(att.getPart(model)!=null){
 				for(ModelRenderer r:att.getPart(model)){
-					for(KansouAttchments.Point point:att.offsets){
+					for(ModelAttachPoint point:att.offsets){
 						GL11.glPushMatrix();
 						GL11.glScalef(1/16F, 1/16F, 1/16F);//这个比率不用调
 						GL11.glTranslatef(
@@ -63,6 +64,8 @@ public class RenderPlayerKansou {
 								);
 						double scale=att.scale;
 						GL11.glScaled(scale,scale,scale);
+						double degree=Math.acos(point.direction.yCoord)*180d/Math.PI;
+						GL11.glRotated(degree, -point.direction.zCoord, 0, point.direction.xCoord);
 						modelManager.renderKansouModel(att);
 						GL11.glPopMatrix();
 					}

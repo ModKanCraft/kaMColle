@@ -16,44 +16,31 @@ public enum KansouAttchments {
 	 * 每个Vec3代表一个附着位置
 	 * 有多个Vec3就会在这多个Vec3上都进行渲染
 	 */
-	Test("",0.1d,Point.get(0d,0d,0d)),
+	Test("",0.1d,ModelAttachPoint.get(0d,0d,0d)),
 	BBTurret("",0.05d,
-			Point.get(20d,-10d,-10d),
-			Point.get(10d,-5d,-10d),
-			Point.get(-10d,-5d,-10d),
-			Point.get(-20d,-10d,-10d)
+			ModelAttachPoint.get(20d,-10d,-10d),
+			ModelAttachPoint.get(10d,-5d,-10d),
+			ModelAttachPoint.get(-10d,-5d,-10d),
+			ModelAttachPoint.get(-20d,-10d,-10d)
 			//四个炮塔的位置
 	), 
-	SSVLauncher("",0.1d,Point.get(0d, 0d, 0d)),
+	SSVLauncher("",0.1d,ModelAttachPoint.get(0d, 0d, 0d)),
 	//只用设置一条腿的偏移，以右腿为参照做右腿的，左腿会自行对称过去
-	TorpedoLauncher("leg",0.08d,Point.get(2d,-4d,0d)),
+	TorpedoLauncher("leg",0.08d,ModelAttachPoint.get(2d,-4d,0d)),
 	//飞行甲板只有一个
-	BBVLaunchPad("right arm",0.1d,Point.get(0d,0d,0d)),
+	BBVLaunchPad("right arm",0.1d,ModelAttachPoint.get(0d,0d,0d)),
 	CVLaunchPad("",0.1d),//这个没想好
-	CLTurret("right arm",0.1d,Point.get(0d,0d,0d),Point.get(0d,0d,0d)),
-	DDTurret("right arm",0.1d,Point.get(0d,0d,0d)),
-	CATurret("right arm",0.1d,Point.get(0d,0d,0d),Point.get(0d,0d,0d)), 
-	DDBridge("",0.25d,Point.get(0d, -10d,-5d));
+	CLTurret("right arm",0.1d,ModelAttachPoint.get(0d,0d,0d),ModelAttachPoint.get(0d,0d,0d)),
+	DDTurret("right arm",0.1d,ModelAttachPoint.get(0d,-5d,1d).setDirectionVec3(0, 0, -1)),
+	CATurret("right arm",0.1d,ModelAttachPoint.get(0d,0d,0d),ModelAttachPoint.get(0d,0d,0d)), 
+	DDBridge("",0.25d,ModelAttachPoint.get(0d, -10d,-5d));
 	public String part;
 	public double scale;
-	public Point[] offsets;
-	private KansouAttchments(String part,double scale,Point... offsets){
+	public ModelAttachPoint[] offsets;
+	private KansouAttchments(String part,double scale,ModelAttachPoint... offsets){
 		this.part=part;
 		this.scale=scale;
 		this.offsets=offsets;
-	}
-	public static class Point{
-		public double x;
-		public double y;
-		public double z;
-		private Point(double x,double y,double z){
-			this.x=x;
-			this.y=y;
-			this.z=z;
-		}
-		public static Point get(double x,double y,double z){
-			return new Point(x,y,z);
-		}
 	}
 	public ArrayList<ModelRenderer> getPart(ModelBiped model){
 		String string=this.part;

@@ -16,7 +16,6 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.ResourceLocation;
@@ -38,20 +37,7 @@ public class KansouChangeGUI extends GuiScreen {
 	boolean isOpening=true;
 	boolean isClosing=false;
 	boolean shouldClosed=false;
-	public static class KansouCard{
-		ItemStack stack;
-		public KansouCard(ItemStack stack){
-			this.stack=stack;
-		}
-		public static ArrayList getFrom(ItemStack stack){
-			ArrayList<KansouCard> cards=new ArrayList<KansouChangeGUI.KansouCard>(stack.stackSize);
-			for(int i=0;i<stack.stackSize;i++){
-				Kamcolle.LogInfo(i);
-				cards.add(new KansouCard(stack));
-			}
-			return cards;
-		}
-	}
+	
 	
 	public class KamcolleButton extends GuiButton{
 		private int style=1;
@@ -78,7 +64,7 @@ public class KansouChangeGUI extends GuiScreen {
 			return this;
 		}
 		public  KamcolleButton setDisplayText(KansouCard card){
-				this.displayString=FleetClass.getClassLocalNameByID(card.stack.getItemDamage())+" "+card.stack.getDisplayName();
+				this.displayString=card.getDisplayName();
 				this.displayText=true;
 			return this;
 		}

@@ -52,7 +52,7 @@ public class PlayerWithKandouInWaterHandler {
 			if(player.motionY<-0.01D||player.motionY>0.01D){
 				player.motionY/=2;
 			}else{
-				player.motionY+=0.01;
+				player.motionY+=0.0055D;
 			}
 		}
 	}

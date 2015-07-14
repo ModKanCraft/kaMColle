@@ -42,7 +42,7 @@ public class KamcolleOBJModelResourceManager {
 		modelTorpedoLauncher=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/fubuki/launcher.obj"));
 		modelBBTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/kongo/BBTurret.obj"));
 		modelDDBridge=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/fubuki/fubuki_back.obj"));
-		//modelDDTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/fubuki/BBTurret.obj"));
+		modelDDTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/fubuki/fubuki_turret.obj"));
 		//modelCATurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CATurret.obj"));
 		//modelCLTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CLTurret.obj"));
 		//modelDDTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/DDTurret.obj"));
@@ -59,6 +59,7 @@ public class KamcolleOBJModelResourceManager {
 		modelsMap.put(KansouAttchments.BBTurret, new Models(modelBBTurret,modelBBTurretTexture));
 		modelsMap.put(KansouAttchments.SSVLauncher, new Models(modelSSVLauncher,modelTestTexture));
 		modelsMap.put(KansouAttchments.DDBridge, new Models(modelDDBridge,modelDDBridgeTexture));
+		modelsMap.put(KansouAttchments.DDTurret, new Models(modelDDTurret));
 		
 		//...
 		//弄好一个加一个
