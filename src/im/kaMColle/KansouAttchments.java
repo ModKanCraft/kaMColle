@@ -31,7 +31,7 @@ public enum KansouAttchments {
 	BBVLaunchPad("right arm",0.1d,ModelAttachPoint.get(0d,0d,0d)),
 	CVLaunchPad("",0.1d),//这个没想好
 	CLTurret("right arm",0.1d,ModelAttachPoint.get(0d,0d,0d),ModelAttachPoint.get(0d,0d,0d)),
-	DDTurret("right arm",0.1d,ModelAttachPoint.get(0d,-5d,1d).setDirectionVec3(0, 0, -1)),
+	DDTurret("right arm",0.2d,ModelAttachPoint.get(1d,-7d,1d).setDirectionVec3(0, 0, -1)),
 	CATurret("right arm",0.1d,ModelAttachPoint.get(0d,0d,0d),ModelAttachPoint.get(0d,0d,0d)), 
 	DDBridge("",0.25d,ModelAttachPoint.get(0d, -10d,-5d));
 	public String part;

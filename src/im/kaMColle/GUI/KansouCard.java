@@ -21,7 +21,7 @@ public class KansouCard{
 		return cards;
 	}
 	public String getDisplayName(){
-		String s=String.format("%s　%s",FleetClass.getClassLocalNameByID(this.stack.getItemDamage()),this.stack.getDisplayName());
+		String s=String.format("%s\040%s",FleetClass.getClassLocalNameByID(this.stack.getItemDamage()),this.stack.getDisplayName());
 		return s;
 	}
 }
