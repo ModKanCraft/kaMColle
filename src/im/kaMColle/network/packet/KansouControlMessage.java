@@ -1,5 +1,7 @@
 package im.kaMColle.network.packet;
 
+import cn.annoreg.core.Registrant;
+import cn.annoreg.mc.RegMessageHandler;
 import im.kaMColle.Kamcolle;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -7,7 +9,8 @@ import net.minecraft.util.ReportedException;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
-
+@Registrant
+@RegMessageHandler(msg = KansouControlMessage.class, side = RegMessageHandler.Side.SERVER)
 public class KansouControlMessage extends PlayerMsg implements IMessageHandler<KansouControlMessage, IMessage>{
 	public byte flow=0;
 	public KansouControlMessage(){super();}

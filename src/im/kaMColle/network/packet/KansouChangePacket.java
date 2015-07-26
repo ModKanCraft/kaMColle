@@ -2,17 +2,19 @@ package im.kaMColle.network.packet;
 
 import org.apache.logging.log4j.Level;
 
+import cn.annoreg.core.Registrant;
+import cn.annoreg.mc.RegMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
 import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import im.kaMColle.FleetClass;
 import im.kaMColle.Kamcolle;
-import im.kaMColle.network.MessageHandler;
 import im.kaMColle.tileEntity.SallyBoardTileEntity;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
-
+@Registrant
+@RegMessageHandler(msg = KansouChangePacket.class, side = RegMessageHandler.Side.SERVER)
 public class KansouChangePacket extends PlayerAndFleetClassMsg implements IMessageHandler<KansouChangePacket, IMessage>{
 	int blockX;
 	int blockY;
@@ -26,33 +28,32 @@ public class KansouChangePacket extends PlayerAndFleetClassMsg implements IMessa
 		this.blockX=x;
 		this.blockY=y;
 		this.blockZ=z;
-
-		this.ints.add(this.blockX);
-		this.ints.add(this.blockY);
-		this.ints.add(this.blockZ);
 	}
 	public void fromBytes(ByteBuf buf){
 		super.fromBytes(buf);
 		this.blockX=this.ints.get(0);
-		this.blockX=this.ints.get(1);
-		this.blockX=this.ints.get(2);
+		this.blockY=this.ints.get(1);
+		this.blockZ=this.ints.get(2);
 	}
 
 	public void toBytes(ByteBuf buf){
+		this.ints.add(this.blockX);
+		this.ints.add(this.blockY);
+		this.ints.add(this.blockZ);
 		super.toBytes(buf);
 	}
 	@Override
 	public IMessage onMessage(KansouChangePacket message, MessageContext ctx) {
 		message.player.getEntityData().setString("FleetClass", message.fleetClass.name());
 		Kamcolle.LogInfo(message.player.getEntityData().getString("FleetClass"));
-		MessageHandler.INSTANCE.sendToAll(new KansouSyncReplyPacket(message.player));
+		Kamcolle.MsgHandler.sendToAll(new KansouSyncReplyPacket(message.player));
 		SallyBoardTileEntity t = (SallyBoardTileEntity) message.player.worldObj
 				.getTileEntity(message.blockX, message.blockY,
 						message.blockZ);
 		try {
 			t.isOccupied = false;
 		} catch (NullPointerException e) {
-			String s=String.format(("Illegal coords for BlockSallyBoard.The Block on this coord %i,%i,%i is %s"),
+			String s=String.format(("Illegal coords for BlockSallyBoard.The Block on this coord %d,%d,%d is %s"),
 					message.blockX,
 					message.blockY,
 					message.blockZ,

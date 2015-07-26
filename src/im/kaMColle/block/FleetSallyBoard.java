@@ -1,11 +1,17 @@
 package im.kaMColle.block;
 
+import cn.annoreg.core.Registrant;
+import cn.annoreg.mc.RegBlockRenderer;
+import cn.annoreg.mc.gui.GuiHandlerBase;
+import cn.annoreg.mc.gui.RegGuiHandler;
 import im.kaMColle.Kamcolle;
 import im.kaMColle.GUI.KansouChangeGUI;
+import im.kaMColle.render.OBJBlockRenderer;
 import im.kaMColle.tileEntity.SallyBoardTileEntity;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.particle.EffectRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,9 +23,19 @@ import net.minecraftforge.common.util.ForgeDirection;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-
+@Registrant
 public class FleetSallyBoard extends BlockContainer {
-
+	@SideOnly(Side.CLIENT)
+	@RegBlockRenderer
+	public static OBJBlockRenderer renderer;
+	@RegGuiHandler
+	public static GuiHandlerBase guiHandler=new GuiHandlerBase(){
+		@Override
+		@SideOnly(Side.CLIENT)
+		protected GuiScreen getClientContainer(EntityPlayer player, World world, int x, int y, int z) {
+			return new KansouChangeGUI(player, (SallyBoardTileEntity) world.getTileEntity(x, y, z));
+		}
+	};
 	public FleetSallyBoard() {
 		super(Material.rock);
 		this.setBlockName("FleetSallyBoard");
@@ -48,10 +64,11 @@ public class FleetSallyBoard extends BlockContainer {
 	public void onEntityWalking(World world, int x, int y, int z, Entity entity){
 		Kamcolle.LogInfo(entity);
 		SallyBoardTileEntity t=(SallyBoardTileEntity) world.getTileEntity(x, y, z);
-		if(entity.worldObj.isRemote&&entity.equals(Minecraft.getMinecraft().thePlayer)&&!t.isOccupied){
-			Kamcolle.proxy.displayGUI(new KansouChangeGUI((EntityPlayer) entity,t));
-		}
 		if(entity instanceof EntityPlayer){
+			if(entity.worldObj.isRemote&&entity.equals(Minecraft.getMinecraft().thePlayer)&&!t.isOccupied){
+				guiHandler.openGuiContainer((EntityPlayer) entity, world, x, y, z);
+				//Kamcolle.proxy.displayGUI(new KansouChangeGUI((EntityPlayer) entity,t));
+			}
 			t.isOccupied=true;
 		}
 	}

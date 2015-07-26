@@ -29,7 +29,6 @@ public class KamcolleClientProxy extends KamcolleCommonProxy{
 		super.init();
 		registerRenderThings();
 		registerSound();
-		FMLCommonHandler.instance().bus().register(new KeyboardInputHandler());
 	}
 
 	public void postInit() {
@@ -39,9 +38,6 @@ public class KamcolleClientProxy extends KamcolleCommonProxy{
 
 	public void registerRenderThings() {
 		// TODO Auto-generated method stub
-		RenderingRegistry.registerBlockHandler(new OBJBlockRenderer());
-		ClientRegistry.bindTileEntitySpecialRenderer(SallyBoardTileEntity.class, new SallyBoardSpecialRenderer());
-		MinecraftForge.EVENT_BUS.register(new RenderPlayerKansou());
 	}
 
 	public void registerSound() {
@@ -54,8 +50,5 @@ public class KamcolleClientProxy extends KamcolleCommonProxy{
 			return Minecraft.getMinecraft().theWorld.getPlayerEntityByName(name);
 		else
 			return super.getPlayer(name);
-	}
-	public void displayGUI(GuiScreen gui){
-		Minecraft.getMinecraft().displayGuiScreen(gui);
 	}
 }

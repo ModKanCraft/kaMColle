@@ -5,10 +5,8 @@ import net.minecraftforge.client.IItemRenderer;
 import net.minecraftforge.client.model.IModelCustom;
 
 public class OBJItemRenderer implements IItemRenderer {
-	IModelCustom model;
-	public OBJItemRenderer(IModelCustom model){
+	public OBJItemRenderer(){
 		// TODO Auto-generated constructor stub
-		this.model=model;
 	}
 	@Override
 	public boolean handleRenderType(ItemStack item, ItemRenderType type) {
@@ -26,7 +24,6 @@ public class OBJItemRenderer implements IItemRenderer {
 	@Override
 	public void renderItem(ItemRenderType type, ItemStack item, Object... data) {
 		// TODO Auto-generated method stub
-		this.model.renderAll();
 	}
 
 }

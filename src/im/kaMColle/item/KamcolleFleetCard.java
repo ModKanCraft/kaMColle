@@ -1,15 +1,18 @@
 package im.kaMColle.item;
 
-import java.util.List;
-
 import im.kaMColle.FleetClass;
 import im.kaMColle.Kamcolle;
+import im.kaMColle.render.OBJItemRenderer;
+
+import java.util.List;
+
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-
+import cn.annoreg.core.Registrant;
+@Registrant
 public class KamcolleFleetCard extends Item {
 	public KamcolleFleetCard(){
 		this.setNoRepair();

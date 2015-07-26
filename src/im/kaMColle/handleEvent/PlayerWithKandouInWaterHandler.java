@@ -2,29 +2,24 @@ package im.kaMColle.handleEvent;
 
 
 
-import im.kaMColle.FleetClass;
-import im.kaMColle.Kamcolle;
-import im.kaMColle.network.MessageHandler;
-import im.kaMColle.network.packet.KansouControlMessage;
+import cn.annoreg.core.Registrant;
+import cn.annoreg.mc.RegEventHandler;
+import cn.annoreg.mc.RegEventHandler.Bus;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
-import net.minecraft.util.ReportedException;
-import net.minecraftforge.event.entity.living.LivingEvent.LivingJumpEvent;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
-import cpw.mods.fml.common.gameevent.PlayerEvent;
 
+@Registrant
+@RegEventHandler(Bus.Forge)
 public class PlayerWithKandouInWaterHandler {
 	@SubscribeEvent
 	public void onPlayerInWater(LivingUpdateEvent event){
 		if(event.entity instanceof EntityPlayer){
 			EntityPlayer player=(EntityPlayer) event.entity;
-			if(player.worldObj.isAABBInMaterial(player.boundingBox, Material.water)){
+			boolean isInWater=player.worldObj.isAABBInMaterial(player.boundingBox, Material.water);
+			if(isInWater){
 				String className=player.getEntityData().getString("FleetClass");
 				if(!(className.isEmpty()||className.equals("NULL"))){
 					if(className.equals("SS")||className.equals("SSV")){
@@ -34,6 +29,7 @@ public class PlayerWithKandouInWaterHandler {
 					}
 				}
 			}
+			player.getEntityData().setBoolean("isInWater", isInWater);
 		}
 	}
 	public void floatPlayerOnWater(EntityPlayer player){

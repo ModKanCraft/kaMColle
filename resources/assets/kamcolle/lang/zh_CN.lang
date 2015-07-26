@@ -1,3 +1,7 @@
 tile.FleetSallyBoard.name=出击踏板
 
-item.fleetCard.name=舰娘卡片
+item.fleetCard.name=舰装卡片
+
+FleetClass.BB.name=战舰
+FleetClass.DD.name=驱逐舰
+FleetClass.CLT.name=重雷装巡洋舰
