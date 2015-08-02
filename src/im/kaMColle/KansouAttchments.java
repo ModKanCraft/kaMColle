@@ -18,10 +18,10 @@ public enum KansouAttchments {
 	 */
 	Test("",0.1d,ModelAttachPoint.get(0d,0d,0d)),
 	BBTurret("",0.05d,
-			ModelAttachPoint.get(20d,-10d,-10d),
-			ModelAttachPoint.get(10d,-5d,-10d),
-			ModelAttachPoint.get(-10d,-5d,-10d),
-			ModelAttachPoint.get(-20d,-10d,-10d)
+			ModelAttachPoint.get(15d,-9d,-7.5d),
+			ModelAttachPoint.get(7.5d,-2d,-7.5d),
+			ModelAttachPoint.get(-7.5d,-2d,-7.5d),
+			ModelAttachPoint.get(-15d,-9d,-7.5d)
 			//四个炮塔的位置
 	), 
 	SSVLauncher("",0.1d,ModelAttachPoint.get(0d, 0d, 0d)),
@@ -33,7 +33,8 @@ public enum KansouAttchments {
 	CLTurret("right arm",0.1d,ModelAttachPoint.get(0d,0d,0d),ModelAttachPoint.get(0d,0d,0d)),
 	DDTurret("right arm",0.2d,ModelAttachPoint.get(1d,-7d,1d).setDirectionVec3(0, 0, -1)),
 	CATurret("right arm",0.1d,ModelAttachPoint.get(0d,0d,0d),ModelAttachPoint.get(0d,0d,0d)), 
-	DDBridge("",0.25d,ModelAttachPoint.get(0d, -10d,-5d));
+	DDBridge("",0.25d,ModelAttachPoint.get(0d, -10d,-5d)), 
+	BBBridge("",0.25d,ModelAttachPoint.get(0d, -9d,-7.5d));
 	public String part;
 	public double scale;
 	public ModelAttachPoint[] offsets;

@@ -7,6 +7,7 @@ import net.minecraft.world.IBlockAccess;
 import org.lwjgl.opengl.GL11;
 
 import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
+import im.kaMColle.OBJmodels.KamcolleOBJModelResourceManager;
 
 public class OBJBlockRenderer implements ISimpleBlockRenderingHandler {
 	public OBJBlockRenderer(){
@@ -15,6 +16,7 @@ public class OBJBlockRenderer implements ISimpleBlockRenderingHandler {
 	@Override
 	public void renderInventoryBlock(Block block, int metadata, int modelId,
 			RenderBlocks renderer) {
+		KamcolleOBJModelResourceManager.getManager().renderInventoryBlockModel(block);
 	}
 
 	@Override

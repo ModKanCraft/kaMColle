@@ -15,7 +15,7 @@ public enum FleetClass {
 	CL(/*KansouAttchments.CLTurret,*/KansouAttchments.TorpedoLauncher),
 	CA(KansouAttchments.CATurret,KansouAttchments.TorpedoLauncher),
 	CV(KansouAttchments.CVLaunchPad),
-	BB(KansouAttchments.BBTurret),
+	BB(KansouAttchments.BBTurret,KansouAttchments.BBBridge),
 	AV,
 	SSV(KansouAttchments.SSVLauncher),
 	//CAV("CATurret","TorpedoLauncher","CAVLaunchPad"),
