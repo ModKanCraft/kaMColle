@@ -36,6 +36,7 @@ public class PoseModel extends ModelBiped {
 		EntityPlayer player=(EntityPlayer) p_78087_7_;
 		this.bipedLeftLeg.rotateAngleX=0;
 		this.bipedRightLeg.rotateAngleX=0;
+		this.bipedBody.isHidden=true;
 		/*
 		FleetClass fleetClass=FleetClass.valueOf(player.getEntityData().getString("FleetClass"));
 		ScriptProgram pose=poseMap.get(fleetClass);
