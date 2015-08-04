@@ -20,28 +20,25 @@ public class PoseModel extends ModelBiped {
 		}
 	}
 	*/
-	
+	float f1=0;
 	public PoseModel(float f) {
 		// TODO Auto-generated constructor stub
 		super(f);
 	}
 
-	@Override
-	public void setRotationAngles(float p_78087_1_, float p_78087_2_,
-			float p_78087_3_, float headAngleY, float headAngleX,
-			float p_78087_6_, Entity p_78087_7_) {
+
+	public void setRotationAngles(float walking_time_delta, float p_78087_2_,
+			float delta, float headAngleY, float headAngleX,
+			float scale, Entity p_78087_7_) {
 		// TODO Auto-generated method stub
-		super.setRotationAngles(p_78087_1_, p_78087_2_, p_78087_3_, headAngleY,
-				headAngleX, p_78087_6_, p_78087_7_);
+		super.setRotationAngles(walking_time_delta, p_78087_2_, delta, headAngleY,
+				headAngleX, scale, p_78087_7_);
 		EntityPlayer player=(EntityPlayer) p_78087_7_;
 		this.bipedLeftLeg.rotateAngleX=0;
 		this.bipedRightLeg.rotateAngleX=0;
-		this.bipedBody.isHidden=true;
-		/*
-		FleetClass fleetClass=FleetClass.valueOf(player.getEntityData().getString("FleetClass"));
-		ScriptProgram pose=poseMap.get(fleetClass);
-		ScriptFunction function=pose.root.getFunction("setPartsAngles");
-		function.callObject(this,p_78087_1_,p_78087_2_);
-		*/
+		this.bipedRightArm.rotateAngleX=this.bipedHead.rotateAngleX-(float) (Math.PI/2);
+		this.bipedRightArm.rotateAngleY=this.bipedHead.rotateAngleY;
+		this.bipedLeftArm.rotateAngleX=this.bipedRightArm.rotateAngleX+(float) (Math.PI/16);
+		this.bipedLeftArm.rotateAngleY=Math.min(this.bipedRightArm.rotateAngleY+(float) (Math.PI/4), (float) (Math.PI/8*3));
 	}
 }

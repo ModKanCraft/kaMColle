@@ -34,7 +34,8 @@ public enum KansouAttchments {
 	DDTurret("right arm",0.2d,ModelAttachPoint.get(1d,-7d,1d).setDirectionVec3(0, 0, -1)),
 	CATurret("right arm",0.1d,ModelAttachPoint.get(0d,0d,0d),ModelAttachPoint.get(0d,0d,0d)), 
 	DDBridge("",0.25d,ModelAttachPoint.get(0d, -10d,-5d)), 
-	BBBridge("",0.25d,ModelAttachPoint.get(0d, -9d,-7.5d));
+	BBBridge("",0.25d,ModelAttachPoint.get(0d, -9d,-7.5d)), 
+	Thurster("",0.1d);
 	public String part;
 	public double scale;
 	public ModelAttachPoint[] offsets;

@@ -76,7 +76,8 @@ public class RenderPlayerKansou {
 		NBTTagCompound data=event.entity.getEntityData();
 		RenderPlayer render = event.renderer;
 		//Init last models
-		if(realMain == null) {
+
+		if(this.realMain==null){
 			realMain = render.modelBipedMain;
 			realArmor = render.modelArmor;
 			realChestplate = render.modelArmorChestplate;
@@ -112,16 +113,22 @@ public class RenderPlayerKansou {
 								r.rotationPointY, 
 								r.rotationPointZ
 								);
-						GL11.glRotatef(r.rotateAngleX*(180F/(float)Math.PI), 1, 0, 0);
-						GL11.glRotatef(r.rotateAngleY*(180F/(float)Math.PI), 0, 1, 0);
-						GL11.glRotatef(r.rotateAngleZ*(180F/(float)Math.PI), 0, 0, 1);
+						if (r.rotateAngleZ != 0.0F){
+							GL11.glRotatef(r.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
+						}
+						if (r.rotateAngleY != 0.0F){
+							GL11.glRotatef(r.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
+						}
+						if (r.rotateAngleX != 0.0F) {
+							GL11.glRotatef(r.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
+						}
+						double scale=att.scale;
 						if(r.mirror)GL11.glScalef(-1F, 1F, 1F);
 						GL11.glTranslated(
 								-point.x, 
 								-point.y, 
 								-point.z
 								);
-						double scale=att.scale;
 						GL11.glScaled(scale,scale,scale);
 						double degree=Math.acos(point.direction.yCoord)*180d/Math.PI;
 						GL11.glRotated(degree, -point.direction.zCoord, 0, point.direction.xCoord);

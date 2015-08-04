@@ -23,7 +23,7 @@ public enum FleetClass {
 	CLT(KansouAttchments.CLTurret,KansouAttchments.TorpedoLauncher),
 	//CVL(KansouType.CVLaunchPad),
 	SCV(KansouAttchments.SSVLauncher),
-	SBB,
+	SBB(KansouAttchments.BBTurret,KansouAttchments.BBBridge,KansouAttchments.BBVLaunchPad,KansouAttchments.Thurster),
 	REI(KansouAttchments.BBTurret,KansouAttchments.TorpedoLauncher,KansouAttchments.BBVLaunchPad),//NANI?!!
 	TEST(KansouAttchments.Test),
 	NULL();

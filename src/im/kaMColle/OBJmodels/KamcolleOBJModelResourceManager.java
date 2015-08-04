@@ -58,8 +58,8 @@ public class KamcolleOBJModelResourceManager {
 		modelSallyBoard=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/start_block/start_block.obj"));
 		//...
 		modelTestTexture=new ResourceLocation(Kamcolle.ID,"textures/checkerboard.png");
-		modelBBTurretTexture=new ResourceLocation(Kamcolle.ID,"textures/models/BBturret.png");
-		modelDDBridgeTexture=new ResourceLocation(Kamcolle.ID,"textures/models/fubuki_back.png");
+		modelBBTurretTexture=new ResourceLocation(Kamcolle.ID,"textures/models/BB_Turret.png");
+		modelDDBridgeTexture=new ResourceLocation(Kamcolle.ID,"textures/models/DD_Back.png");
 		//...
 		modelsMap.put(KansouAttchments.Test, new Models(modelTest));
 		modelsMap.put(KansouAttchments.TorpedoLauncher, new Models(modelTorpedoLauncher,modelTestTexture));
@@ -96,34 +96,13 @@ public class KamcolleOBJModelResourceManager {
 	public void renderInventoryBlockModel(Block block){
 		Models models=this.blockModelsMap.get(block.getClass());
 		GL11.glPushMatrix();
-		GL11.glDisable(GL11.GL_CULL_FACE);
-		if(models.hasTexture){
-			textureManager.bindTexture(models.texture);
-		}else{
-			GL11.glDisable(GL11.GL_TEXTURE_2D);
-			GL11.glColor3f(30F, 30F, 30F);
-		}
-		GL11.glScalef(-0.1F,-0.1F,-0.1F);
-		models.model.renderAll();
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GL11.glScalef(0.1F, 0.1F, 0.1F);
+		renderModel(models);
 		GL11.glPopMatrix();
 	}
 	public void renderKansouModel(KansouAttchments att){
-		GL11.glPushMatrix();
-		GL11.glDisable(GL11.GL_CULL_FACE);
 		Models models=getModel(att);
-		if(models.hasTexture){
-			textureManager.bindTexture(models.texture);
-		}else{
-			GL11.glDisable(GL11.GL_TEXTURE_2D);
-			GL11.glColor3f(30F, 30F, 30F);
-		}
-		GL11.glScalef(-1F, -1F, -1F);
-		models.model.renderAll();
-		GL11.glEnable(GL11.GL_CULL_FACE);
-		GL11.glEnable(GL11.GL_TEXTURE_2D);
-		GL11.glPopMatrix();
+		renderModel(models);
 	}
 	public void renderModelSallyBoard(SallyBoardTileEntity t){
 		GL11.glPushMatrix();
@@ -133,6 +112,21 @@ public class KamcolleOBJModelResourceManager {
 		modelSallyBoard.renderAllExcept("button");;
 		if(t.isOccupied)GL11.glTranslatef(0,0,-1.8F);
 		modelSallyBoard.renderPart("button");
+		GL11.glPopMatrix();
+	}
+	private void renderModel(Models models){
+		GL11.glPushMatrix();
+		GL11.glDisable(GL11.GL_CULL_FACE);
+		if(models.hasTexture){
+			textureManager.bindTexture(models.texture);
+		}else{
+			GL11.glDisable(GL11.GL_TEXTURE_2D);
+			GL11.glColor3f(30F, 30F, 30F);
+		}
+		GL11.glScalef(-1F,-1F,-1F);
+		models.model.renderAll();
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glEnable(GL11.GL_TEXTURE_2D);
 		GL11.glPopMatrix();
 	}
 	private Models getModel(KansouAttchments type){
