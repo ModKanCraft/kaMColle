@@ -53,7 +53,7 @@ public class KamcolleOBJModelResourceManager {
 		//modelCATurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CATurret.obj"));
 		//modelCLTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/CLTurret.obj"));
 		//modelDDTurret=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/DDTurret.obj"));
-		modelSSVLauncher=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/SS/SSV_1.obj"));
+		modelSSVLauncher=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/SS/SSV_Right.obj"));
 		
 		modelSallyBoard=AdvancedModelLoader.loadModel(new ResourceLocation(Kamcolle.ID,"models/start_block/start_block.obj"));
 		//...

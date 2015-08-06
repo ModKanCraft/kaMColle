@@ -30,7 +30,7 @@ import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 @Registrant
 @RegistrationMod(pkg = "im.kaMColle", res = "kamcolle")
 public class Kamcolle {
-	public static final String VERSION = "0.0.2";
+	public static final String VERSION = "0.0.3";
 	public static final String ID="kamcolle";
 	public static final Logger LOGGER = LogManager.getLogger(ID);	
 	public static KamcolleConfig coreConfig=new KamcolleConfig(new File("config/Kamcolle.cfg"));

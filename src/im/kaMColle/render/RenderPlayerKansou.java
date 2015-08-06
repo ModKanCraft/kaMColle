@@ -4,15 +4,18 @@ import im.kaMColle.FleetClass;
 import im.kaMColle.KansouAttchments;
 import im.kaMColle.ModelAttachPoint;
 import im.kaMColle.OBJmodels.KamcolleOBJModelResourceManager;
-import im.kaMColle.hackModels.PoseModel;
+import im.kaMColle.hackModels.DDPose;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 
 import net.minecraft.client.model.ModelBiped;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderPlayer;
 import net.minecraft.client.renderer.entity.RendererLivingEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.client.event.RenderPlayerEvent;
 
@@ -45,6 +48,7 @@ public class RenderPlayerKansou {
 	  */
 	ModelBiped hackMain, hackArmor, hackChestplate, hackModel;
 	ModelBiped realMain, realArmor, realChestplate, realModel;
+	private static HashMap<FleetClass,ModelBiped[]> poseMap=new HashMap();
 	
 	private static Field fldmain;
 	static {
@@ -54,12 +58,10 @@ public class RenderPlayerKansou {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+		registPose(FleetClass.NULL,ModelBiped.class);
 	} 
 	public RenderPlayerKansou() {
 		// TODO Auto-generated constructor stub
-		hackMain = hackModel = new PoseModel(0.0F);
-		hackChestplate = new PoseModel(1.0F);
-		hackArmor = new PoseModel(0.5F);
 	}
 	
 	@SubscribeEvent
@@ -76,7 +78,10 @@ public class RenderPlayerKansou {
 		NBTTagCompound data=event.entity.getEntityData();
 		RenderPlayer render = event.renderer;
 		//Init last models
-
+		ModelBiped[] pose=getModel(event.entity);
+		hackMain = hackModel = pose[0];
+		hackChestplate = pose[2];
+		hackArmor =  pose[1];
 		if(this.realMain==null){
 			realMain = render.modelBipedMain;
 			realArmor = render.modelArmor;
@@ -154,5 +159,34 @@ public class RenderPlayerKansou {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+
+	
+	public static void registPose(FleetClass fc,Class<? extends ModelBiped> clazz){
+		ModelBiped[] pose=new ModelBiped[3];
+		pose[0]=invokePoseModel(0F,clazz);
+		pose[1]=invokePoseModel(0.5F,clazz);
+		pose[2]=invokePoseModel(1F,clazz);
+		poseMap.put(fc,pose);
+	}
+	private static ModelBiped invokePoseModel(float scale,Class clazz){
+		try {
+			return (ModelBiped) clazz.getDeclaredConstructor(float.class).newInstance(scale);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return invokePoseModel(scale,ModelBiped.class);
+		}
+	}
+	public static ModelBiped[] getModel(FleetClass fc){
+		ModelBiped[] pose=poseMap.get(fc);
+		return pose;
+	}
+	public static ModelBiped[] getModel(Entity e){
+		FleetClass fc=FleetClass.valueOf(e.getEntityData().getString("FleetClass"));
+		if(!poseMap.containsKey(fc))fc=FleetClass.NULL;
+		return getModel(fc);
 	}
 }
