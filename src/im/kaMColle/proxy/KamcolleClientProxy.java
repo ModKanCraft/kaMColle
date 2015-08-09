@@ -1,24 +1,23 @@
 package im.kaMColle.proxy;
 
-import im.kaMColle.handleEvent.KeyboardInputHandler;
-import im.kaMColle.handleEvent.PlayerWithKandouInWaterHandler;
-import im.kaMColle.network.packet.KansouSyncPacket;
-import im.kaMColle.render.OBJBlockRenderer;
-import im.kaMColle.render.RenderPlayerKansou;
-import im.kaMColle.render.tileEntity.SallyBoardSpecialRenderer;
-import im.kaMColle.tileEntity.SallyBoardTileEntity;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.client.registry.ClientRegistry;
-import cpw.mods.fml.client.registry.RenderingRegistry;
+import java.io.File;
+
+import org.lwjgl.input.Keyboard;
+
+import cn.annoreg.core.Registrant;
+import cn.liutils.util.helper.KeyManager;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-
+import im.kaMColle.Kamcolle;
+import im.kaMColle.anno.RegKeyBingding;
+import im.kaMColle.config.KamcolleConfig;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.config.Configuration;
+@Registrant
 public class KamcolleClientProxy extends KamcolleCommonProxy{
-
+	public static Configuration keyConfig=new Configuration(new File("config/"+Kamcolle.ID+"Key.cfg"));
 	public void preInit() {
 		// TODO Auto-generated method stub
 		super.preInit();

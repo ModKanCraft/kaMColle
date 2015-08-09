@@ -1,42 +1,81 @@
 package im.kaMColle.handleEvent;
 
+import org.lwjgl.input.Keyboard;
+
 import cn.annoreg.core.Registrant;
 import cn.annoreg.mc.RegEventHandler;
 import cn.annoreg.mc.RegEventHandler.Bus;
+import cn.liutils.registry.KeyHandlerRegistration.RegKeyHandler;
+import cn.liutils.util.helper.KeyHandler;
 import im.kaMColle.Kamcolle;
 import im.kaMColle.network.packet.KansouControlMessage;
+import im.kaMColle.proxy.KamcolleClientProps;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.InputEvent.KeyInputEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 @Registrant
-@RegEventHandler(Bus.FML)
-public class KeyboardInputHandler {
-	byte t=0;
-	static final byte MAX_V=10;
+@RegEventHandler()
+public class KeyboardInputHandler{
+	static float lastFlotage=0;
+	static float flotage=0;
+	static boolean isFlowChanging;
+	@RegKeyHandler(keyID = Keyboard.KEY_SPACE, name = "float")
+	public static KeyHandler floatHandler=new KeyHandler() {
+		@Override
+		public void onKeyDown(){
+			isFlowChanging=true;
+		}
+		@Override
+		public void onKeyTick(){
+			if(flotage<100)flotage+=0.5F;
+			Kamcolle.LogInfo(flotage);
+		}
+		@Override
+		public void onKeyUp(){
+			isFlowChanging=false;
+		}
+	};
+	@RegKeyHandler(keyID = Keyboard.KEY_LSHIFT, name = "sink")
+	public static KeyHandler sinkHandler=new KeyHandler() {
+		@Override
+		public void onKeyDown(){
+			isFlowChanging=true;
+		}
+		@Override
+		public void onKeyTick(){
+			if(flotage>-100)flotage-=0.5F;
+			Kamcolle.LogInfo(flotage);
+		}
+		@Override
+		public void onKeyUp(){
+			isFlowChanging=false;
+		}
+	};
 	@SubscribeEvent
-	public void listenKeyJumpAndSneak(KeyInputEvent e){
-		EntityPlayer me=Minecraft.getMinecraft().thePlayer;
-		if(me.worldObj.isAABBInMaterial(me.boundingBox, Material.water)){
-			if(Minecraft.getMinecraft().gameSettings.keyBindJump.getIsKeyPressed()){
-				addFlow(1);
+	public void Handleflow(LivingUpdateEvent e){
+		if(e.entity.equals(Minecraft.getMinecraft().thePlayer)){
+			if(!isFlowChanging){
+				if(flotage>0){
+					if(flotage%5>0)flotage-=0.5F;
+				}else if(flotage<0){
+					if(flotage%5<0)flotage+=0.5F;
+				}
 			}
-			if(Minecraft.getMinecraft().gameSettings.keyBindSneak.getIsKeyPressed()){
-				addFlow(-1); 
+			if(flotage%5==0&&flotage!=lastFlotage){
+				Kamcolle.MsgHandler.sendToServer(new KansouControlMessage((EntityPlayer) e.entity, (byte)flotage));
+				lastFlotage=flotage;
 			}
 		}
-		
-		Kamcolle.LogInfo(t);
-		Kamcolle.MsgHandler.sendToServer(new KansouControlMessage(Minecraft.getMinecraft().thePlayer,t));
 	}
-	private int addFlow(int i){
-		t+=i;
-		if(t>MAX_V)t=MAX_V;
-		else if(t<-MAX_V)t=-MAX_V;
-		return t;
+	public void HandleNormalKeyInput(KeyInputEvent e){
+		while(KamcolleClientProps.aim.isPressed()){
+			
+		}
 	}
 }

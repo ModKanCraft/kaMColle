@@ -39,6 +39,10 @@ public class KamcolleConfig {
     {
         return this.config.get("general", PropertyName, DefaultValue).getInt();
     }
+	public int getCoreIntProps(String PropertyName, int DefaultValue ,String comment)
+    {
+        return this.config.get("core", PropertyName, DefaultValue, comment).getInt();
+    }
 	public String toString(){
 		return config.toString();
 	}

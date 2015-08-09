@@ -10,6 +10,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import im.kaMColle.Kamcolle;
+import im.kaMColle.network.packet.KansouControlMessage;
 
 @Registrant
 @RegEventHandler(Bus.Forge)
@@ -23,16 +25,16 @@ public class PlayerWithKandouInWaterHandler {
 				String className=player.getEntityData().getString("FleetClass");
 				if(!(className.isEmpty()||className.equals("NULL"))){
 					if(className.equals("SS")||className.equals("SSV")){
-						priventPlayerSinkInWater(player);
+						classSSFloatInWater(player);
 					}else{
-						floatPlayerOnWater(player);
+						floatOnWater(player);
 					}
 				}
 			}
 			player.getEntityData().setBoolean("isInWater", isInWater);
 		}
 	}
-	public void floatPlayerOnWater(EntityPlayer player){
+	public void floatOnWater(EntityPlayer player){
 		int i0=5;
 		int i1=0;
 		for (int i = 0; i < i0; ++i){
@@ -52,17 +54,31 @@ public class PlayerWithKandouInWaterHandler {
 			}
 		}
 	}
-	public void priventPlayerSinkInWater(EntityPlayer player){
-		player.motionY+=0.1D;
-		byte b;
-		try{
-			b=player.getDataWatcher().getWatchableObjectByte(25);
-		}catch(Exception e){
-			player.getDataWatcher().addObject(25, Byte.valueOf((byte) 0));
-			b=player.getDataWatcher().getWatchableObjectByte(25);
+	public void classSSFloatInWater(EntityPlayer player){
+		if(player.motionY<-0.1d)player.motionY=-0.1d;
+		int i1=0;
+		for(int i=1;i<=2;i++){
+			AxisAlignedBB aabb = AxisAlignedBB.getBoundingBox(player.boundingBox.minX, player.boundingBox.minY + (player.boundingBox.maxY - player.boundingBox.minY)*(double)(i-1)/5d, player.boundingBox.minZ, player.boundingBox.maxX, player.boundingBox.minY + (player.boundingBox.maxY - player.boundingBox.minY) *(double)i/5d, player.boundingBox.maxZ);
+			if (player.worldObj.isAABBInMaterial(aabb, Material.water))i1+=1;
 		}
-		if(b>0)player.motionY+=0.1D*b;
-		else if(b<0)player.motionY-=0.1D*b;
+		if(i1!=0){
+			player.motionY+=0.05d*i1;
+			byte b;
+			try{
+				b=(byte) (player.getDataWatcher().getWatchableObjectByte(KansouControlMessage.getWatchedID())-40);
+				Kamcolle.LogInfo(b);
+			}catch(Exception e){
+				b=0;
+				player.getDataWatcher().addObject(KansouControlMessage.getWatchedID(),Byte.valueOf((byte) 0));
+			}
+			player.motionY+=0.002D*b;
+		}else{
+			try{
+				player.getDataWatcher().updateObject(KansouControlMessage.getWatchedID(),Byte.valueOf((byte) 0));
+			}catch(Exception e){
+				player.getDataWatcher().addObject(KansouControlMessage.getWatchedID(),Byte.valueOf((byte) 0));
+			}
+		}
 	}
 
 }
