@@ -9,6 +9,7 @@ import cn.liutils.registry.KeyHandlerRegistration.RegKeyHandler;
 import cn.liutils.util.helper.KeyHandler;
 import im.kaMColle.Kamcolle;
 import im.kaMColle.network.packet.KansouControlMessage;
+import im.kaMColle.network.packet.PlayerAimmingPacket;
 import im.kaMColle.proxy.KamcolleClientProps;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -73,9 +74,10 @@ public class KeyboardInputHandler{
 			}
 		}
 	}
+	@SubscribeEvent
 	public void HandleNormalKeyInput(KeyInputEvent e){
 		while(KamcolleClientProps.aim.isPressed()){
-			
+			Kamcolle.MsgHandler.sendToServer(new PlayerAimmingPacket(Minecraft.getMinecraft().thePlayer));
 		}
 	}
 }
