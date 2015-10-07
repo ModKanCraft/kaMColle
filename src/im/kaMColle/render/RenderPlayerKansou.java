@@ -1,23 +1,8 @@
 package im.kaMColle.render;
 
-import im.kaMColle.FleetClass;
-import im.kaMColle.KansouAttchments;
-import im.kaMColle.ModelAttachPoint;
-import im.kaMColle.OBJmodels.KamcolleOBJModelResourceManager;
-import im.kaMColle.hackModels.DDPose;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
-
-import net.minecraft.client.model.ModelBiped;
-import net.minecraft.client.model.ModelRenderer;
-import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.client.renderer.entity.RenderPlayer;
-import net.minecraft.client.renderer.entity.RendererLivingEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraftforge.client.event.RenderPlayerEvent;
 
 import org.lwjgl.opengl.GL11;
 
@@ -28,6 +13,18 @@ import cn.liutils.util.generic.RegistryUtils;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import im.kaMColle.FleetClass;
+import im.kaMColle.KansouAttchments;
+import im.kaMColle.ModelAttachPoint;
+import im.kaMColle.OBJmodels.KamcolleOBJModelResourceManager;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.model.ModelRenderer;
+import net.minecraft.client.renderer.entity.RenderManager;
+import net.minecraft.client.renderer.entity.RenderPlayer;
+import net.minecraft.client.renderer.entity.RendererLivingEntity;
+import net.minecraft.entity.Entity;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.client.event.RenderPlayerEvent;
 @SideOnly(Side.CLIENT)
 @Registrant
 @RegEventHandler(Bus.Forge)
@@ -71,7 +68,41 @@ public class RenderPlayerKansou {
 		if(KansouType.isEmpty())return;
 		FleetClass Class=FleetClass.valueOf(KansouType);
 		ModelBiped model=event.renderer.modelBipedMain;
-		renderKansouOnModel(Class, model);
+		for(KansouAttchments att:Class.Kansou){
+			if(att.getPart(model)!=null){
+				for(ModelRenderer r:att.getPart(model)){
+					for(ModelAttachPoint point:att.offsets){
+						GL11.glPushMatrix();
+						GL11.glScalef(1/16F, 1/16F, 1/16F);//这个比率不用调
+						GL11.glTranslatef(
+								r.rotationPointX, 
+								r.rotationPointY, 
+								r.rotationPointZ
+								);
+						if (r.rotateAngleZ != 0.0F){
+							GL11.glRotatef(r.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
+						}
+						if (r.rotateAngleY != 0.0F){
+							GL11.glRotatef(r.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
+						}
+						if (r.rotateAngleX != 0.0F) {
+							GL11.glRotatef(r.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
+						}
+						double scale=att.scale;
+						if(r.mirror)GL11.glScalef(-1F, 1F, 1F);
+						GL11.glTranslated(
+								-point.x, 
+								-point.y, 
+								-point.z
+								);
+						GL11.glScaled(scale,scale,scale);
+						point.setToRotationByEntityData(event.entity);
+						modelManager.renderKansouModel(att);
+						GL11.glPopMatrix();
+					}
+				}
+			}
+		}
 	}
 	@SubscribeEvent
 	public void startRender(RenderPlayerEvent.Pre event){
@@ -106,44 +137,7 @@ public class RenderPlayerKansou {
 		render.modelArmorChestplate = realChestplate;
 		setMainModel(render, realModel);
 	}
-	public void renderKansouOnModel(FleetClass Class,ModelBiped model){
-		for(KansouAttchments att:Class.Kansou){
-			if(att.getPart(model)!=null){
-				for(ModelRenderer r:att.getPart(model)){
-					for(ModelAttachPoint point:att.offsets){
-						GL11.glPushMatrix();
-						GL11.glScalef(1/16F, 1/16F, 1/16F);//这个比率不用调
-						GL11.glTranslatef(
-								r.rotationPointX, 
-								r.rotationPointY, 
-								r.rotationPointZ
-								);
-						if (r.rotateAngleZ != 0.0F){
-							GL11.glRotatef(r.rotateAngleZ * (180F / (float)Math.PI), 0.0F, 0.0F, 1.0F);
-						}
-						if (r.rotateAngleY != 0.0F){
-							GL11.glRotatef(r.rotateAngleY * (180F / (float)Math.PI), 0.0F, 1.0F, 0.0F);
-						}
-						if (r.rotateAngleX != 0.0F) {
-							GL11.glRotatef(r.rotateAngleX * (180F / (float)Math.PI), 1.0F, 0.0F, 0.0F);
-						}
-						double scale=att.scale;
-						if(r.mirror)GL11.glScalef(-1F, 1F, 1F);
-						GL11.glTranslated(
-								-point.x, 
-								-point.y, 
-								-point.z
-								);
-						GL11.glScaled(scale,scale,scale);
-						double degree=Math.acos(point.direction.yCoord)*180d/Math.PI;
-						GL11.glRotated(degree, -point.direction.zCoord, 0, point.direction.xCoord);
-						modelManager.renderKansouModel(att);
-						GL11.glPopMatrix();
-					}
-				}
-			}
-		}
-	}
+	
 	private void setMainModel(RenderPlayer r, ModelBiped m) {
 		try {
 			fldmain.set(r, m);

@@ -16,25 +16,25 @@ public enum KansouAttchments {
 	 * 每个Vec3代表一个附着位置
 	 * 有多个Vec3就会在这多个Vec3上都进行渲染
 	 */
-	Test("",0.1d,ModelAttachPoint.get(0d,0d,0d)),
+	Test("",0.1d,new ModelAttachPoint(0d,0d,0d)),
 	BBTurret("",0.05d,
-			ModelAttachPoint.get(15d,-9d,-7.5d),
-			ModelAttachPoint.get(7.5d,-2d,-7.5d),
-			ModelAttachPoint.get(-7.5d,-2d,-7.5d),
-			ModelAttachPoint.get(-15d,-9d,-7.5d)
+			new ModelAttachPoint(15d,-9d,-7.5d),
+			new ModelAttachPoint(7.5d,-2d,-7.5d),
+			new ModelAttachPoint(-7.5d,-2d,-7.5d),
+			new ModelAttachPoint(-15d,-9d,-7.5d)
 			//四个炮塔的位置
 	), 
-	SSVLauncher("",0.25d,ModelAttachPoint.get(5d, -15d, 5d)),
+	SSVLauncher("",0.25d,new ModelAttachPoint(5d, -15d, 5d)),
 	//只用设置一条腿的偏移，以右腿为参照做右腿的，左腿会自行对称过去
-	TorpedoLauncher("leg",0.08d,ModelAttachPoint.get(2d,-4d,0d)),
+	TorpedoLauncher("leg",0.08d,new ModelAttachPoint(2d,-4d,0d)),
 	//飞行甲板只有一个
-	BBVLaunchPad("right arm",0.1d,ModelAttachPoint.get(0d,0d,0d)),
+	BBVLaunchPad("right arm",0.1d,new ModelAttachPoint(0d,0d,0d)),
 	CVLaunchPad("",0.1d),//这个没想好
-	CLTurret("right arm",0.1d,ModelAttachPoint.get(0d,0d,0d),ModelAttachPoint.get(0d,0d,0d)),
-	DDTurret("right arm",0.2d,ModelAttachPoint.get(1d,-7d,1d).setDirectionVec3(0, 0, -1)),
-	CATurret("right arm",0.1d,ModelAttachPoint.get(0d,0d,0d),ModelAttachPoint.get(0d,0d,0d)), 
-	DDBridge("",0.25d,ModelAttachPoint.get(0d, -10d,-5d)), 
-	BBBridge("",0.25d,ModelAttachPoint.get(0d, -9d,-7.5d)), 
+	CLTurret("right arm",0.1d,new ModelAttachPoint(0d,0d,0d),new ModelAttachPoint(0d,0d,0d)),
+	DDTurret("right arm",0.2d,new ModelAttachPoint(1d,-7d,1d).setDirectionVec3(0, 0, -1)),
+	CATurret("right arm",0.1d,new ModelAttachPoint(0d,0d,0d),new ModelAttachPoint(0d,0d,0d)), 
+	DDBridge("",0.25d,new ModelAttachPoint(0d, -10d,-5d)), 
+	BBBridge("",0.25d,new ModelAttachPoint(0d, -9d,-7.5d)), 
 	Thurster("",0.1d);
 	public String part;
 	public double scale;
